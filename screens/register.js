@@ -35,12 +35,12 @@ const [date, setDate] = useState(new Date());
     const currentDate = selectedDate;
     setShow(false);
     setDate(currentDate);
+    setDateOfBirth();
   };
 
   const showMode = (currentMode) => {
     if (Platform.OS === 'android') {
       setShow(true);
-      // for iOS, add a button that closes the picker
     }else{
       setShow(true);
     }
@@ -196,7 +196,7 @@ const [date, setDate] = useState(new Date());
         <TextInput style={styles.input} 
         placeholder="Date of Birth" 
         placeholderTextColor="gray"
-        value={dateOfBirth}></TextInput><Button onPress={showDatepicker} title="Date of Birth" />
+        value={date.toLocaleDateString()}></TextInput><Button onPress={showDatepicker} title="Date of Birth" />
         {show && (
         <DateTimePicker
           testID="dateTimePicker"
