@@ -5,14 +5,16 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Button,
   TouchableWithoutFeedback,
   Keyboard,
   Alert,
   LogBox,
 } from "react-native";
 import * as SQLite from "expo-sqlite";
-import DatePicker from "react-native-datepicker";
-
+//import DatePicker from "react-native-datepicker";
+//import DatePicker from 'react-native-date-picker'
+import DateTimePicker from '@react-native-community/datetimepicker';
 const db = SQLite.openDatabase("RonsDB.db");
 
 const RegisterScreen = ({ navigation }) => {
@@ -25,12 +27,36 @@ const RegisterScreen = ({ navigation }) => {
   const [hobby, setHobby] = useState("");
   const [favoriteGenre, setFavoriteGenre] = useState("");
 
+const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    setShow(false);
+    setDate(currentDate);
+  };
+
+  const showMode = (currentMode) => {
+    if (Platform.OS === 'android') {
+      setShow(true);
+      // for iOS, add a button that closes the picker
+    }else{
+      setShow(true);
+    }
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
   const handleRegister = () => {
     if (
       username === "" ||
       email === "" ||
       phoneNumber === "" ||
-      dateOfBirth === "" ||
+     // dateOfBirth === "" ||
       password === "" ||
       confirmPassword === "" ||
       hobby === "" ||
@@ -51,14 +77,14 @@ const RegisterScreen = ({ navigation }) => {
       Alert.alert("Error", "Please enter a valid phone number");
       return;
     }
-    if (
+    /*if (
       !/^(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-(19|20)\d{2}$/.test(
         dateOfBirth
       )
     ) {
       Alert.alert("Error", "Please enter a valid date of birth");
       return;
-    }
+    }*/
     if (
       !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=.*[^\s]).{8,}$/.test(
         password
@@ -166,38 +192,20 @@ const RegisterScreen = ({ navigation }) => {
           value={phoneNumber}
           onChangeText={setPhoneNumber}
         />
-        <DatePicker
-          style={styles.datepicker}
-          date={dateOfBirth}
-          value={dateOfBirth}
-          mode="date"
-          placeholder="Date of Birth"
-          format="DD-MM-YYYY"
-          confirmBtnText="Confirm"
-          cancelBtnText="Cancel"
-          customStyles={{
-            dateIcon: {
-              position: "absolute",
-              right: -5,
-              top: 4,
-              marginLeft: 0,
-            },
-            dateInput: {
-              borderColor: "gray",
-              alignItems: "flex-start",
-              borderWidth: 0,
-              borderBottomWidth: 1,
-            },
-            placeholderText: {
-              color: "gray",
-              right: -5,
-            },
-            dateText: {
-              right: -5,
-            },
-          }}
-          onDateChange={setDateOfBirth}
-        />
+        <View style={styles.datepicker}>
+        <TextInput style={styles.input} 
+        placeholder="Date of Birth" 
+        placeholderTextColor="gray"
+        value={dateOfBirth}></TextInput><Button onPress={showDatepicker} title="Date of Birth" />
+        {show && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          mode={'date'}
+          is24Hour={true}
+          onChange={onChange}/>
+        )}
+        </View>
         <TextInput
           style={styles.input}
           placeholder="Password"
@@ -270,8 +278,8 @@ const styles = StyleSheet.create({
     color: "white",
   },
   datepicker: {
-    width: "99%",
-    marginBottom: 16,
+    width:'100%',
+    marginBottom: 16, 
   },
   registerButton: {
     width: "100%",
@@ -304,3 +312,36 @@ const styles = StyleSheet.create({
 });
 
 export default RegisterScreen;
+/*
+<DatePicker
+style={styles.datepicker}
+date={dateOfBirth}
+value={dateOfBirth}
+mode="date"
+placeholder="Date of Birth"
+format="DD-MM-YYYY"
+confirmBtnText="Confirm"
+cancelBtnText="Cancel"
+customStyles={{
+  dateIcon: {
+    position: "absolute",
+    right: -5,
+    top: 4,
+    marginLeft: 0,
+  },
+  dateInput: {
+    borderColor: "gray",
+    alignItems: "flex-start",
+    borderWidth: 0,
+    borderBottomWidth: 1,
+  },
+  placeholderText: {
+    color: "gray",
+    right: -5,
+  },
+  dateText: {
+    right: -5,
+  },
+}}
+onDateChange={setDateOfBirth}
+/>*/

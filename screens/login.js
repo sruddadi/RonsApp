@@ -48,18 +48,10 @@ const LoginScreen = ({ navigation }) => {
         [username, password],
         (_, { rows }) => {
           setUname(username);
+          navigation.navigate("Menu");
         }
       );
     });
-    return (
-      <View style={styles.container}>
-        {/* Add your app components here */}
-        <Text style={styles.title}>Welcome, {uname}</Text>
-        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-          <Text style={styles.logoutButtonText}>Log Out</Text>
-        </TouchableOpacity>
-      </View>
-    );
   } else {
     return (
       <TouchableWithoutFeedback onPress={dismissKeyboard}>
