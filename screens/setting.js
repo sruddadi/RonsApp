@@ -1,51 +1,8 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  Alert,
-  Button,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import * as ImagePicker from "expo-image-picker";
 
 const SettingsScreen = ({ navigation }) => {
-  const [contactImage, setContactImage] = useState(null);
-
-  const [username, setUsername] = useState(null);
-
-  useEffect(() => {
-    const fetchUsername = async () => {
-      try {
-        const response = await fetch("http://localhost:8888/getUsername.php", {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json", // I added this line
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const data = await response.json();
-
-        if (data.status === "success") {
-          setUsername(data.username);
-        } else {
-          Alert.alert("Failed");
-        }
-      } catch (error) {
-        console.error("Fetch error:", error);
-      }
-    };
-
-    fetchUsername();
-  }, []);
-
   const handleLogout = async () => {
     Alert.alert(
       "Logout Confirmation",
@@ -88,43 +45,35 @@ const SettingsScreen = ({ navigation }) => {
     );
   };
 
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [1, 1],
-      quality: 1,
-    });
-
-    if (!result.cancelled) {
-      setContactPic(result.uri);
-    }
-  };
-
   return (
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.headerContainer}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back" size={24} color="black" />
+          <Ionicons name="caret-back-outline" size={24} color="black" />
         </TouchableOpacity>
         <Text style={styles.headerText}>Settings</Text>
         <View />
       </View>
       {/* Contact Picture */}
-      <View style={styles.contactContainer}>
-        {contactImage ? (
-          <Image source={{ uri: contactImage }} style={styles.contactImage} />
-        ) : (
-          <Text style={styles.noContactImage}>
-            {username ? `Username: ${username}` : "Fetching username..."}
-          </Text>
-        )}
-        <Button title="Upload Picture" onPress={pickImage} />
-      </View>
+
       {/* Settings */}
       <View style={styles.settingContainer}>
-        <Text style={styles.settingLabel}>Enable Notifications</Text>
+        <Text
+          style={styles.settingLabel}
+          onPress={() => navigation.navigate("Profile")}
+        >
+          Profile
+        </Text>
+        <TouchableOpacity style={styles.arrowContainer}>
+          <Ionicons name="chevron-forward-outline" size={20} color="black" />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.settingContainer}>
+        <Text style={styles.settingLabel}>App Version</Text>
+        <TouchableOpacity>
+          <Text style={{ fontWeight: "bold" }}>1.7.0</Text>
+        </TouchableOpacity>
       </View>
       <View style={styles.settingContainer}>
         <Text style={styles.settingLabel} onPress={handleLogout}>
@@ -145,7 +94,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: 16,
-    marginBottom: 20,
+    marginBottom: 40,
   },
   headerText: {
     fontSize: 24,
@@ -180,6 +129,7 @@ const styles = StyleSheet.create({
   },
   settingLabel: {
     fontSize: 16,
+    fontWeight: "bold",
   },
 });
 
