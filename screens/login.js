@@ -10,30 +10,36 @@ import {
   Image,
   Alert,
 } from "react-native";
-import * as SQLite from "expo-sqlite";
 
-const db = SQLite.openDatabase("RonsDB.db");
 const LoginScreen = ({ navigation }) => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [uname, setUname] = useState("");
 
   const handleLogin = () => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        "SELECT * FROM users WHERE username = ? AND password = ?",
-        [username, password],
-        (_, { rows }) => {
-          if (rows.length > 0) {
-            Alert.alert("Success", "Login successful!");
-            setIsLoggedIn(true);
-          } else {
-            Alert.alert("Error", "Invalid username or password.");
-          }
+    const formData = new FormData();
+    formData.append("email", email);
+    formData.append("password", password);
+
+    fetch("http://localhost:8888/login.php", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json", // I added this line
+      },
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.message === "Login successful!") {
+          Alert.alert("Success", "Login successful!");
+          navigation.navigate("Menu");
+        } else {
+          Alert.alert("Error", "Invalid username or password.");
         }
-      );
-    });
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
   const handleLogout = () => {
     setIsLoggedIn(false);
@@ -41,76 +47,61 @@ const LoginScreen = ({ navigation }) => {
   const dismissKeyboard = () => {
     Keyboard.dismiss();
   };
-  if (isLoggedIn) {
-    db.transaction((tx) => {
-      tx.executeSql(
-        "SELECT * FROM users WHERE username = ? AND password = ?",
-        [username, password],
-        (_, { rows }) => {
-          setUname(username);
-          navigation.navigate("Menu");
-        }
-      );
-    });
-  } else {
-    return (
-      <TouchableWithoutFeedback onPress={dismissKeyboard}>
-        <View style={styles.container}>
-          <Image source={require("../assets/logos.png")} style={styles.logo} />
-          <TextInput
-            style={styles.input}
-            placeholder="Username"
-            placeholderTextColor="#555555"
-            value={username}
-            onChangeText={setUsername}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Password"
-            placeholderTextColor="#555555"
-            secureTextEntry={true}
-            value={password}
-            onChangeText={setPassword}
-          />
-          <TouchableOpacity
-            style={styles.forgotPasswordButton}
-            onPress={() => navigation.navigate("ForgotPassword")}
-          >
-            <Text style={styles.forgotPasswordButtonText}>
-              Forgot Password?
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-            <Text style={styles.loginButtonText}>Log In</Text>
-          </TouchableOpacity>
+  return (
+    <TouchableWithoutFeedback onPress={dismissKeyboard}>
+      <View style={styles.container}>
+        <Image source={require("../assets/logos.png")} style={styles.logo} />
+        <TextInput
+          style={styles.input}
+          placeholder="Email ID"
+          placeholderTextColor="#555555"
+          value={email}
+          onChangeText={setEmail}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          placeholderTextColor="#555555"
+          secureTextEntry={true}
+          value={password}
+          onChangeText={setPassword}
+        />
+        <TouchableOpacity
+          style={styles.forgotPasswordButton}
+          onPress={() => navigation.navigate("ForgotPassword")}
+        >
+          <Text style={styles.forgotPasswordButtonText}>Forgot Password?</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+          <Text style={styles.loginButtonText}>Log In</Text>
+        </TouchableOpacity>
 
-          <View style={styles.dividerContainer}>
-            <View style={styles.divider} />
-            <Text style={styles.dividerText}>OR</Text>
-            <View style={styles.divider} />
-          </View>
-          <TouchableOpacity
-            style={styles.guestButton}
-            onPress={() => navigation.navigate("Register")}
-          >
-            <Text style={styles.guestButtonText}>Continue as a Guest</Text>
-          </TouchableOpacity>
-          <View style={styles.bottomDivider} />
-          <View style={styles.signupContainer}>
-            <Text style={styles.signupText}>
-              Don't have an account?{" "}
-              <Text
-                style={styles.signupButtonText}
-                onPress={() => navigation.navigate("Register")}
-              >
-                Sign Up
-              </Text>
-            </Text>
-          </View>
+        <View style={styles.dividerContainer}>
+          <View style={styles.divider} />
+          <Text style={styles.dividerText}>OR</Text>
+          <View style={styles.divider} />
         </View>
-      </TouchableWithoutFeedback>
-    );
-  }
+        <TouchableOpacity
+          style={styles.guestButton}
+          onPress={() => navigation.navigate("Register")}
+        >
+          <Text style={styles.guestButtonText}>Continue as a Guest</Text>
+        </TouchableOpacity>
+        <View style={styles.bottomDivider} />
+        <View style={styles.signupContainer}>
+          <Text style={styles.signupText}>
+            Don't have an account?{" "}
+            <Text
+              style={styles.signupButtonText}
+              onPress={() => navigation.navigate("Register")}
+            >
+              Sign Up
+            </Text>
+          </Text>
+        </View>
+      </View>
+    </TouchableWithoutFeedback>
+  );
 };
 
 const styles = StyleSheet.create({

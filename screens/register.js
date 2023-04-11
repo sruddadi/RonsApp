@@ -12,19 +12,14 @@ import {
   LogBox,
   Modal,
 } from "react-native";
-import * as SQLite from "expo-sqlite";
-//import DatePicker from "react-native-datepicker";
-//import DatePicker from 'react-native-date-picker'
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Icon } from "react-native-elements";
 import { MaterialIcons } from "@expo/vector-icons";
-const db = SQLite.openDatabase("RonsDB.db");
 
 const RegisterScreen = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [dateOfBirth, setDateOfBirth] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [hobby, setHobby] = useState("");
@@ -70,14 +65,14 @@ const RegisterScreen = ({ navigation }) => {
       Alert.alert("Error", "Please enter a valid phone number");
       return;
     }
-    /*if (
-      !/^(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-(19|20)\d{2}$/.test(
-        dateOfBirth
-      )
-    ) {
-      Alert.alert("Error", "Please enter a valid date of birth");
-      return;
-    }*/
+    // if (
+    //   !/^(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-(19|20)\d{2}$/.test(
+    //     dateOfBirth
+    //   )
+    // ) {
+    //   Alert.alert("Error", "Please enter a valid date of birth");
+    //   return;
+    // }
     if (
       !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=.*[^\s]).{8,}$/.test(
         password
@@ -99,57 +94,46 @@ const RegisterScreen = ({ navigation }) => {
       return;
     }
 
-    db.transaction((tx) => {
-      tx.executeSql(
-        "CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, email TEXT, phone_number TEXT, date_of_birth TEXT, password TEXT, hobby TEXT, favorite_genre TEXT)"
-      );
-      tx.executeSql(
-        "SELECT id FROM users WHERE email = ?",
-        [email],
-        (_, result) => {
-          if (result.rows.length > 0) {
-            Alert.alert("Error", "User already exists!");
-          } else {
-            tx.executeSql(
-              "SELECT id FROM users WHERE username = ?",
-              [username],
-              (_, result) => {
-                if (result.rows.length > 0) {
-                  Alert.alert("Error", "Username is taken. Please try again!");
-                } else {
-                  tx.executeSql(
-                    "INSERT INTO users (username, email, phone_number, date_of_birth, password, hobby, favorite_genre) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                    [
-                      username,
-                      email,
-                      phoneNumber,
-                      dateOfBirth,
-                      password,
-                      hobby,
-                      favoriteGenre,
-                    ],
-                    (txObj, resultSet) => {
-                      Alert.alert("Success", "User registered successfully!", [
-                        {
-                          text: "OK",
-                          onPress: () => navigation.navigate("Login"),
-                        },
-                      ]);
-                    },
-                    (txObj, error) => {
-                      console.log("Error inserting user: ", error);
-                    }
-                  );
-                }
-              }
-            );
-          }
-        },
-        (txObj, error) => {
-          console.log("Error selecting user: ", error);
+    const formData = new FormData();
+    formData.append("username", username);
+    formData.append("email", email);
+    formData.append("phoneNumber", phoneNumber);
+    formData.append("date", date);
+    formData.append("password", password);
+    formData.append("hobby", hobby);
+    formData.append("favoriteGenre", favoriteGenre);
+
+    fetch("http://localhost:8888/register.php", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json", // I added this line
+      },
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.message === "User registered successfully") {
+          Alert.alert("Success", "User registered successfully!", [
+            {
+              text: "OK",
+              onPress: () => navigation.navigate("Login"),
+            },
+          ]);
+        } else if (data.message === "User already exists") {
+          Alert.alert("Error", "User already exists. Please try again!", [
+            {
+              text: "OK",
+              onPress: () => navigation.navigate("Login"),
+            },
+          ]);
+        } else {
+          Alert.alert("Error", "Failed to register user");
         }
-      );
-    });
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
   const dismissKeyboard = () => {
@@ -212,8 +196,8 @@ const RegisterScreen = ({ navigation }) => {
                 right: 0,
                 justifyContent: "center",
                 alignItems: "center",
-                backgroundColor: "black", // Set a contrasting background color
-                opacity: 20, // Set opacity to make it semi-transparent
+                backgroundColor: "black",
+                opacity: 20,
               }}
             >
               <DateTimePicker
@@ -350,36 +334,3 @@ const styles = StyleSheet.create({
 });
 
 export default RegisterScreen;
-/*
-<DatePicker
-style={styles.datepicker}
-date={dateOfBirth}
-value={dateOfBirth}
-mode="date"
-placeholder="Date of Birth"
-format="DD-MM-YYYY"
-confirmBtnText="Confirm"
-cancelBtnText="Cancel"
-customStyles={{
-  dateIcon: {
-    position: "absolute",
-    right: -5,
-    top: 4,
-    marginLeft: 0,
-  },
-  dateInput: {
-    borderColor: "gray",
-    alignItems: "flex-start",
-    borderWidth: 0,
-    borderBottomWidth: 1,
-  },
-  placeholderText: {
-    color: "gray",
-    right: -5,
-  },
-  dateText: {
-    right: -5,
-  },
-}}
-onDateChange={setDateOfBirth}
-/>*/

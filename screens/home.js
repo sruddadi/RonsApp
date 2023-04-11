@@ -1,14 +1,37 @@
 import React, { useEffect } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
+import { StyleSheet, View, Image } from "react-native";
 import localImage from "../assets/logo3.png";
 
 const HomeScreen = ({ navigation }) => {
   useEffect(() => {
-    const timer = setTimeout(() => {
-      navigation.navigate("Login");
-    }, 1000); // Change the number (in milliseconds) to adjust the timer
-    return () => clearTimeout(timer);
+    const checkSession = async () => {
+      try {
+        const response = await fetch("http://localhost:8888/getSession.php", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json", // I added this line
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const value = await response.json();
+
+        if (value.status === "success") {
+          navigation.navigate("Menu");
+        } else {
+          navigation.navigate("Login");
+        }
+      } catch (error) {
+        console.error("Fetch error:", error);
+      }
+    };
+    checkSession();
   }, []);
+
   return (
     <View style={styles.container}>
       <Image source={localImage} style={styles.image} />
