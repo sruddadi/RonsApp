@@ -12,13 +12,16 @@ const ProfileScreen = ({ navigation }) => {
   useEffect(() => {
     const fetchUsername = async () => {
       try {
-        const response = await fetch("http://localhost:8888/getUsername.php", {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json", // I added this line
-          },
-        });
+        const response = await fetch(
+          "https://sxu2906.uta.cloud/getUsername.php",
+          {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json", // I added this line
+            },
+          }
+        );
 
         if (!response.ok) {
           throw new Error("Network response was not ok");

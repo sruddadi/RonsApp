@@ -16,13 +16,16 @@ const SettingsScreen = ({ navigation }) => {
           text: "Logout",
           onPress: async () => {
             try {
-              const response = await fetch("http://localhost:8888/logout.php", {
-                method: "POST",
-                headers: {
-                  Accept: "application/json",
-                  "Content-Type": "application/json", // I added this line
-                },
-              });
+              const response = await fetch(
+                "https://sxu2906.uta.cloud/logout.php",
+                {
+                  method: "POST",
+                  headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                  },
+                }
+              );
 
               if (!response.ok) {
                 throw new Error("Network response was not ok");
