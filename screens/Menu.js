@@ -19,13 +19,13 @@ const MenuScreen = ({ navigation }) => {
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate("Login")}
+            onPress={() => navigation.navigate("Phone")}
           >
             <Text style={styles.buttonText}>Consonants</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate("Register")}
+            onPress={() => navigation.navigate("Vow")}
           >
             <Text style={styles.buttonText}>Vowels</Text>
           </TouchableOpacity>

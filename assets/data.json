@@ -1,0 +1,494 @@
+[
+    {
+      "ID": 1,
+      "IPA": "jʊər",
+      "Examples": "cure (= /juːr/)",
+      "Type": "Full vowels followed by R"
+    },
+    {
+      "ID": 2,
+      "IPA": "ŋ",
+      "Examples": "sang, sink, singer",
+      "Type": "Consonants"
+    },
+    {
+      "ID": 3,
+      "IPA": "t",
+      "Examples": "tie, sty, cat, atom",
+      "Type": "Consonants"
+    },
+    {
+      "ID": 4,
+      "IPA": "iː.ər",
+      "Examples": "freer",
+      "Type": "Full vowels followed by R"
+    },
+    {
+      "ID": 5,
+      "IPA": "aʊər",
+      "Examples": "flour (= /aʊr/)",
+      "Type": "Full vowels followed by R"
+    },
+    {
+      "ID": 6,
+      "IPA": "ær",
+      "Examples": "barrow, marry",
+      "Type": "Full vowels followed by R"
+    },
+    {
+      "ID": 7,
+      "IPA": "ʊ",
+      "Examples": "foot, good, full, woman",
+      "Type": "Full vowels"
+    },
+    {
+      "ID": 8,
+      "IPA": "ɒ",
+      "Examples": "lot, pod, John",
+      "Type": "Full vowels"
+    },
+    {
+      "ID": 9,
+      "IPA": "b",
+      "Examples": "buy, cab",
+      "Type": "Consonants"
+    },
+    {
+      "ID": 10,
+      "IPA": "dʒ",
+      "Examples": "giant, badge, jam",
+      "Type": "Consonants"
+    },
+    {
+      "ID": 11,
+      "IPA": "oʊ",
+      "Examples": "goat, code, foal, bone, go",
+      "Type": "Full vowels"
+    },
+    {
+      "ID": 12,
+      "IPA": "ˈ",
+      "Examples": "intonation /ˌɪntəˈneɪʃən/,",
+      "Type": "Stress"
+    },
+    {
+      "ID": 13,
+      "IPA": "ʌr",
+      "Examples": "hurry, nourish (in the UK)",
+      "Type": "Full vowels followed by R"
+    },
+    {
+      "ID": 14,
+      "IPA": "uː.ər",
+      "Examples": "truer",
+      "Type": "Full vowels followed by R"
+    },
+    {
+      "ID": 15,
+      "IPA": "ɔər",
+      "Examples": "force, more, boar, oral (= /oʊr/)",
+      "Type": "Full vowels followed by R"
+    },
+    {
+      "ID": 16,
+      "IPA": "hw",
+      "Examples": "why",
+      "Type": "Consonants"
+    },
+    {
+      "ID": 17,
+      "IPA": "aɪ.ər",
+      "Examples": "higher, buyer",
+      "Type": "Full vowels followed by R"
+    },
+    {
+      "ID": 18,
+      "IPA": "ɒr",
+      "Examples": "moral, forage",
+      "Type": "Full vowels followed by R"
+    },
+    {
+      "ID": 19,
+      "IPA": "˜",
+      "Examples": "bon vivant /ˌbɒ̃ viːˈvɒ̃/",
+      "Type": "Marginal consonants"
+    },
+    {
+      "ID": 20,
+      "IPA": "ʌ",
+      "Examples": "strut, bud, dull, gun",
+      "Type": "Full vowels"
+    },
+    {
+      "ID": 21,
+      "IPA": "iː",
+      "Examples": "fleece, seed, feel, mean, sea",
+      "Type": "Full vowels"
+    },
+    {
+      "ID": 22,
+      "IPA": "w",
+      "Examples": "wye, swine",
+      "Type": "Consonants"
+    },
+    {
+      "ID": 23,
+      "IPA": "ɔɪər",
+      "Examples": "coir (= /ɔɪr/)",
+      "Type": "Full vowels followed by R"
+    },
+    {
+      "ID": 24,
+      "IPA": "p",
+      "Examples": "pie, spy, cap",
+      "Type": "Consonants"
+    },
+    {
+      "ID": 25,
+      "IPA": "x",
+      "Examples": "ugh, loch, Chanukah",
+      "Type": "Marginal consonants"
+    },
+    {
+      "ID": 26,
+      "IPA": "s",
+      "Examples": "sigh, mass",
+      "Type": "Consonants"
+    },
+    {
+      "ID": 27,
+      "IPA": "ɪ",
+      "Examples": "kit, lid, fill, bin",
+      "Type": "Full vowels"
+    },
+    {
+      "ID": 28,
+      "IPA": "eɪ",
+      "Examples": "face, made, fail, vein, pay",
+      "Type": "Full vowels"
+    },
+    {
+      "ID": 29,
+      "IPA": "aʊ.ər",
+      "Examples": "flower",
+      "Type": "Full vowels followed by R"
+    },
+    {
+      "ID": 30,
+      "IPA": "aɪər",
+      "Examples": "Ireland, hire (= /aɪr/)",
+      "Type": "Full vowels followed by R"
+    },
+    {
+      "ID": 31,
+      "IPA": "ð",
+      "Examples": "thy, breathe, father",
+      "Type": "Consonants"
+    },
+    {
+      "ID": 32,
+      "IPA": "f",
+      "Examples": "fan, caff, phi",
+      "Type": "Consonants"
+    },
+    {
+      "ID": 33,
+      "IPA": "l",
+      "Examples": "lie, sly, gal",
+      "Type": "Consonants"
+    },
+    {
+      "ID": 34,
+      "IPA": "eɪ.ər",
+      "Examples": "layer (one who lays)",
+      "Type": "Full vowels followed by R"
+    },
+    {
+      "ID": 35,
+      "IPA": "ɡ",
+      "Examples": "guy, bag",
+      "Type": "Consonants"
+    },
+    {
+      "ID": 36,
+      "IPA": "ʊər",
+      "Examples": "boor, moor, tourist (= /uːr/)",
+      "Type": "Full vowels followed by R"
+    },
+    {
+      "ID": 37,
+      "IPA": "r",
+      "Examples": "rye, try, very",
+      "Type": "Consonants"
+    },
+    {
+      "ID": 38,
+      "IPA": "i",
+      "Examples": "happy, serious[24] (either /ɪ/ or /iː/)",
+      "Type": "Reduced vowels"
+    },
+    {
+      "ID": 39,
+      "IPA": "ə",
+      "Examples": "comma, Rosa’s, ago, quiet, focus",
+      "Type": "Reduced vowels"
+    },
+    {
+      "ID": 40,
+      "IPA": "aʊ",
+      "Examples": "mouth, loud, foul, down, how",
+      "Type": "Full vowels"
+    },
+    {
+      "ID": 41,
+      "IPA": "z",
+      "Examples": "zoo, has",
+      "Type": "Consonants"
+    },
+    {
+      "ID": 42,
+      "IPA": "ɛ",
+      "Examples": "dress, bet, fell, men",
+      "Type": "Full vowels"
+    },
+    {
+      "ID": 43,
+      "IPA": "ʃ",
+      "Examples": "shy, cash, emotion",
+      "Type": "Consonants"
+    },
+    {
+      "ID": 44,
+      "IPA": "tʃ",
+      "Examples": "china, catch",
+      "Type": "Consonants"
+    },
+    {
+      "ID": 45,
+      "IPA": "əm",
+      "Examples": "rhythm (either [əm] or [m̩])",
+      "Type": "Reduced vowels"
+    },
+    {
+      "ID": 46,
+      "IPA": "ɑːr",
+      "Examples": "start, bard, barn, snarl, star",
+      "Type": "Full vowels followed by R"
+    },
+    {
+      "ID": 47,
+      "IPA": "uː",
+      "Examples": "goose, food, fool, soon, chew, do",
+      "Type": "Full vowels"
+    },
+    {
+      "ID": 48,
+      "IPA": "v",
+      "Examples": "vie, have",
+      "Type": "Consonants"
+    },
+    {
+      "ID": 49,
+      "IPA": "ʊr",
+      "Examples": "courier",
+      "Type": "Full vowels followed by R"
+    },
+    {
+      "ID": 50,
+      "IPA": "ɛr",
+      "Examples": "error, merry",
+      "Type": "Full vowels followed by R"
+    },
+    {
+      "ID": 51,
+      "IPA": "juː",
+      "Examples": "cute, mule, puny, beauty, huge, you, tune",
+      "Type": "Full vowels"
+    },
+    {
+      "ID": 52,
+      "IPA": "d",
+      "Examples": "dye, cad, do",
+      "Type": "Consonants"
+    },
+    {
+      "ID": 53,
+      "IPA": ".",
+      "Examples": "/haɪər/ hire, /haɪ.ər/ higher",
+      "Type": "Syllabification"
+    },
+    {
+      "ID": 54,
+      "IPA": "ʔ",
+      "Examples": "uh-oh /ˈʔʌʔoʊ/",
+      "Type": "Marginal consonants"
+    },
+    {
+      "ID": 55,
+      "IPA": "h",
+      "Examples": "high, ahead",
+      "Type": "Consonants"
+    },
+    {
+      "ID": 56,
+      "IPA": "j",
+      "Examples": "yes, hallelujah",
+      "Type": "Consonants"
+    },
+    {
+      "ID": 57,
+      "IPA": "ɪər",
+      "Examples": "near, beard, fierce, serious (= /iːr/)",
+      "Type": "Full vowels followed by R"
+    },
+    {
+      "ID": 58,
+      "IPA": "ɪr",
+      "Examples": "mirror, Sirius",
+      "Type": "Full vowels followed by R"
+    },
+    {
+      "ID": 59,
+      "IPA": "k",
+      "Examples": "sky, crack",
+      "Type": "Consonants"
+    },
+    {
+      "ID": 60,
+      "IPA": "ɔː.ər",
+      "Examples": "sawer",
+      "Type": "Full vowels followed by R"
+    },
+    {
+      "ID": 61,
+      "IPA": "aɪ",
+      "Examples": "price, ride, file, fine, pie",
+      "Type": "Full vowels"
+    },
+    {
+      "ID": 62,
+      "IPA": "ᵻ",
+      "Examples": "roses, enough[26] (either /ɪ/ or /ə/)",
+      "Type": "Reduced vowels"
+    },
+    {
+      "ID": 63,
+      "IPA": "ɜːr",
+      "Examples": "nurse, word, girl, fern, furry",
+      "Type": "Full vowels followed by R"
+    },
+    {
+      "ID": 64,
+      "IPA": "ɔː",
+      "Examples": "thought, Maud, dawn, fall, straw",
+      "Type": "Full vowels"
+    },
+    {
+      "ID": 65,
+      "IPA": "ˌ",
+      "Examples": "battleship /ˈbætəlʃɪp",
+      "Type": "Stress"
+    },
+    {
+      "ID": 66,
+      "IPA": "ᵿ",
+      "Examples": "beautiful, curriculum ([jᵿ])[27] (either /ʊ/ or /ə/)",
+      "Type": "Reduced vowels"
+    },
+    {
+      "ID": 67,
+      "IPA": "ən",
+      "Examples": "button (either [ən] or [n̩])",
+      "Type": "Reduced vowels"
+    },
+    {
+      "ID": 68,
+      "IPA": "ɔːr",
+      "Examples": "north, born, war, Laura",
+      "Type": "Full vowels followed by R"
+    },
+    {
+      "ID": 69,
+      "IPA": "ɔɪ",
+      "Examples": "choice, void, foil, coin, boy",
+      "Type": "Full vowels"
+    },
+    {
+      "ID": 70,
+      "IPA": "ər",
+      "Examples": "letter, perceive",
+      "Type": "Reduced vowels"
+    },
+    {
+      "ID": 71,
+      "IPA": "ɛər",
+      "Examples": "square, mare, scarce, cairn, Mary (= /eɪr/)",
+      "Type": "Full vowels followed by R"
+    },
+    {
+      "ID": 72,
+      "IPA": "æ",
+      "Examples": "trap, pad, ban",
+      "Type": "Full vowels"
+    },
+    {
+      "ID": 73,
+      "IPA": "ɑː",
+      "Examples": "palm, father, bra",
+      "Type": "Full vowels"
+    },
+    {
+      "ID": 74,
+      "IPA": "oʊ.ər",
+      "Examples": "mower",
+      "Type": "Full vowels followed by R"
+    },
+    {
+      "ID": 75,
+      "IPA": "n",
+      "Examples": "nigh, snide, can",
+      "Type": "Consonants"
+    },
+    {
+      "ID": 76,
+      "IPA": "ʒ",
+      "Examples": "equation, pleasure, vision, beige",
+      "Type": "Consonants"
+    },
+    {
+      "ID": 77,
+      "IPA": "əl",
+      "Examples": "bottle (either [əl] or [l̩])",
+      "Type": "Reduced vowels"
+    },
+    {
+      "ID": 78,
+      "IPA": "juː.ər",
+      "Examples": "fewer",
+      "Type": "Full vowels followed by R"
+    },
+    {
+      "ID": 79,
+      "IPA": "m",
+      "Examples": "my, smile, cam",
+      "Type": "Consonants"
+    },
+    {
+      "ID": 80,
+      "IPA": "θ",
+      "Examples": "thigh, math",
+      "Type": "Consonants"
+    },
+    {
+      "ID": 81,
+      "IPA": "u",
+      "Examples": "situation (either /ʊ/ or /uː/)",
+      "Type": "Reduced vowels"
+    },
+    {
+      "ID": 82,
+      "IPA": "ɔɪ.ər",
+      "Examples": "employer",
+      "Type": "Full vowels followed by R"
+    }
+  ]
