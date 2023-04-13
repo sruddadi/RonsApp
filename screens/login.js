@@ -20,11 +20,11 @@ const LoginScreen = ({ navigation }) => {
     formData.append("email", email);
     formData.append("password", password);
 
-    fetch("http://localhost:8888/login.php", {
+    fetch("https://sxu2906.uta.cloud/login.php", {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json", // I added this line
+        "Content-Type": "multipart/form-data",
       },
       body: formData,
     })

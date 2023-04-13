@@ -103,11 +103,11 @@ const RegisterScreen = ({ navigation }) => {
     formData.append("hobby", hobby);
     formData.append("favoriteGenre", favoriteGenre);
 
-    fetch("http://localhost:8888/register.php", {
+    fetch("https://sxu2906.uta.cloud/register.php", {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json", // I added this line
+        "Content-Type": "multipart/form-data",
       },
       body: formData,
     })

@@ -6,13 +6,16 @@ const HomeScreen = ({ navigation }) => {
   useEffect(() => {
     const checkSession = async () => {
       try {
-        const response = await fetch("http://localhost:8888/getSession.php", {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json", // I added this line
-          },
-        });
+        const response = await fetch(
+          "https://sxu2906.uta.cloud//getSession.php",
+          {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json", // I added this line
+            },
+          }
+        );
 
         if (!response.ok) {
           throw new Error("Network response was not ok");
