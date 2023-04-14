@@ -13,6 +13,7 @@ import Details from "./screens/Details";
 import ProfileScreen from "./screens/profile";
 import EditProfileScreen from "./screens/editProfile";
 import ChangePasswordScreen from "./screens/changePassword";
+import VideoScreen from "./screens/video";
 
 const Stack = createStackNavigator();
 
@@ -24,7 +25,6 @@ export default function App() {
           headerShown: false,
         }}
       >
-        
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Menu" component={MenuScreen} />
@@ -38,6 +38,7 @@ export default function App() {
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="EditProfile" component={EditProfileScreen} />
         <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
+        <Stack.Screen name="Video" component={VideoScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,20 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   SafeAreaView,
   Text,
   View,
   TouchableOpacity,
-  Image,
 } from "react-native";
 
 import { Icon } from "react-native-elements";
 
-const MenuScreen = ({ navigation }) => {
+const MenuScreen = ({ route, navigation }) => {
+  const { id } = route.params; // ID to be used - for prateek
   return (
     <SafeAreaView>
       <View style={styles.container}>
-        <Text style={styles.buttonText1}> Welcome </Text>
+        <Text style={styles.buttonText1}> Welcome {id}</Text>
         <View style={styles.WelContainer}></View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
@@ -44,7 +44,7 @@ const MenuScreen = ({ navigation }) => {
         </View>
 
         <View style={styles.buttonContainer1}>
-          <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+          <TouchableOpacity onPress={() => navigation.navigate("Video")}>
             <Icon name="play" type="font-awesome" style={styles.button1}></Icon>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate("Register")}>
