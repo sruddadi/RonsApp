@@ -47,10 +47,27 @@ const ProfileScreen = ({ navigation }) => {
 
     fetchUsername();
   }, []);
+  const editUsername = () => {
+    navigation.navigate("EditProfile", { username });
+  };
+  const editEmail = () => {
+    navigation.navigate("EditProfile", { email });
+  };
+  const editContact = () => {
+    navigation.navigate("EditProfile", { contact });
+  };
+  const editDOB = () => {
+    navigation.navigate("EditProfile", { dob });
+  };
+  const editHobby = () => {
+    navigation.navigate("EditProfile", { hobby });
+  };
+  const editGenre = () => {
+    navigation.navigate("EditProfile", { genre });
+  };
 
   return (
     <View style={styles.container}>
-      {/* Header */}
       <View style={styles.headerContainer}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="caret-back-outline" size={24} color="black" />
@@ -61,37 +78,67 @@ const ProfileScreen = ({ navigation }) => {
       <View style={styles.settingContainer}>
         <Text style={styles.settingLabel}>Username</Text>
         <TouchableOpacity style={styles.arrowContainer}>
-          <Text style={{ fontWeight: "bold" }}>{username}</Text>
+          <Text style={styles.dataText}>{username}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.editContainer}>
+          <Text style={styles.editText} onPress={editUsername}>
+            Edit
+          </Text>
         </TouchableOpacity>
       </View>
       <View style={styles.settingContainer}>
         <Text style={styles.settingLabel}>Email</Text>
         <TouchableOpacity style={styles.arrowContainer}>
-          <Text style={{ fontWeight: "bold" }}>{email}</Text>
+          <Text style={styles.dataText}>{email}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.editContainer}>
+          <Text style={styles.editText} onPress={editEmail}>
+            Edit
+          </Text>
         </TouchableOpacity>
       </View>
       <View style={styles.settingContainer}>
         <Text style={styles.settingLabel}>Contact</Text>
         <TouchableOpacity style={styles.arrowContainer}>
-          <Text style={{ fontWeight: "bold" }}>{contact}</Text>
+          <Text style={styles.dataText}>{contact}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.editContainer}>
+          <Text style={styles.editText} onPress={editContact}>
+            Edit
+          </Text>
         </TouchableOpacity>
       </View>
       <View style={styles.settingContainer}>
         <Text style={styles.settingLabel}>Date of Birth</Text>
         <TouchableOpacity style={styles.arrowContainer}>
-          <Text style={{ fontWeight: "bold" }}>{dob}</Text>
+          <Text style={styles.dataText}>{dob}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.editContainer}>
+          <Text style={styles.editText} onPress={editDOB}>
+            Edit
+          </Text>
         </TouchableOpacity>
       </View>
       <View style={styles.settingContainer}>
         <Text style={styles.settingLabel}>Hobby</Text>
         <TouchableOpacity style={styles.arrowContainer}>
-          <Text style={{ fontWeight: "bold" }}>{hobby}</Text>
+          <Text style={styles.dataText}>{hobby}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.editContainer}>
+          <Text style={styles.editText} onPress={editHobby}>
+            Edit
+          </Text>
         </TouchableOpacity>
       </View>
       <View style={styles.settingContainer}>
         <Text style={styles.settingLabel}>Genre</Text>
         <TouchableOpacity style={styles.arrowContainer}>
-          <Text style={{ fontWeight: "bold" }}>{genre}</Text>
+          <Text style={styles.dataText}>{genre}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.editContainer}>
+          <Text style={styles.editText} onPress={editGenre}>
+            Edit
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -102,6 +149,16 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 80,
     backgroundColor: "white",
+  },
+  dataText: {
+    color: "gray",
+    top: 3,
+  },
+  editText: {
+    top: 3,
+    textAlign: "right",
+    fontWeight: "bold",
+    textDecorationLine: "underline",
   },
   headerContainer: {
     flexDirection: "row",
@@ -120,11 +177,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 20,
   },
-
+  editContainer: {
+    marginLeft: 350,
+    top: -35,
+    marginBottom: -10,
+    justifyContent: "center",
+  },
   settingContainer: {
-    flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
     paddingHorizontal: 16,
     marginBottom: 16,
     borderBottomWidth: 1,

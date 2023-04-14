@@ -7,7 +7,7 @@ const HomeScreen = ({ navigation }) => {
     const checkSession = async () => {
       try {
         const response = await fetch(
-          "https://sxu2906.uta.cloud//getSession.php",
+          "https://sxu2906.uta.cloud/getSession.php",
           {
             method: "POST",
             headers: {

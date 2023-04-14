@@ -66,10 +66,37 @@ const SettingsScreen = ({ navigation }) => {
           style={styles.settingLabel}
           onPress={() => navigation.navigate("Profile")}
         >
-          Profile
+          Personal Information
         </Text>
         <TouchableOpacity style={styles.arrowContainer}>
-          <Ionicons name="chevron-forward-outline" size={20} color="black" />
+          <Ionicons
+            name="chevron-forward-outline"
+            size={20}
+            color="black"
+            fontWeight="bold"
+          />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.settingContainer}>
+        <Text
+          style={styles.settingLabel}
+          onPress={() => navigation.navigate("ChangePassword")}
+        >
+          Change Password
+        </Text>
+        <TouchableOpacity style={styles.arrowContainer}>
+          <Ionicons
+            name="chevron-forward-outline"
+            size={20}
+            color="black"
+            fontWeight="bold"
+          />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.settingContainer}>
+        <Text style={styles.settingLabel}>Your Native Language</Text>
+        <TouchableOpacity>
+          <Text style={{ fontWeight: "bold" }}>English</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.settingContainer}>
@@ -132,7 +159,6 @@ const styles = StyleSheet.create({
   },
   settingLabel: {
     fontSize: 16,
-    fontWeight: "bold",
   },
 });
 

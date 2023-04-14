@@ -6,15 +6,49 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
   View,
 } from "react-native";
 
 const ForgotPasswordScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
+  const [responseMessage, setResponseMessage] = useState("");
   const dismissKeyboard = () => {
     Keyboard.dismiss();
   };
-  const handleResetPassword = () => {};
+  const handleResetPassword = () => {
+    fetch("https://sxu2906.uta.cloud/forgotPassword.php", {
+      // Replace with your PHP script URL
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: `email=${email}`, // Pass email as a parameter to the PHP script
+    })
+      .then((response) => response.text()) // Get the response as plain text
+      .then((responseText) => {
+        // Handle the response from PHP script
+        setResponseMessage(responseText);
+        if (responseText === "Reset Successful!") {
+          // Show an alert if password reset is successful
+          Alert.alert("Success", "Password reset successful!");
+          // Alert.alert(responseMessage);
+          navigation.navigate("Login");
+        } else if (responseText === "Reset Unsuccessful!") {
+          Alert.alert("Error", "Password reset failed!");
+          // Alert.alert(responseMessage);
+          navigation.navigate("ForgotPassword");
+        } else if (responseText === "Email doesn't exist!") {
+          Alert.alert("Error", "Email doesn't exist!");
+          // Alert.alert(responseMessage);
+          navigation.navigate("ForgotPassword");
+        } else {
+          Alert.alert(responseMessage);
+          navigation.navigate("ForgotPassword");
+        }
+      })
+      .catch((error) => console.error(error));
+  };
 
   return (
     <TouchableWithoutFeedback onPress={dismissKeyboard}>
@@ -79,6 +113,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 40,
     backgroundColor: "#1c1c1c",
+    color: "white",
     borderRadius: 4,
     padding: 8,
     marginBottom: 16,

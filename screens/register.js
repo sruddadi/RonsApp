@@ -24,6 +24,7 @@ const RegisterScreen = ({ navigation }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [hobby, setHobby] = useState("");
   const [favoriteGenre, setFavoriteGenre] = useState("");
+  const [dob, setDOB] = useState("");
 
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
@@ -98,7 +99,7 @@ const RegisterScreen = ({ navigation }) => {
     formData.append("username", username);
     formData.append("email", email);
     formData.append("phoneNumber", phoneNumber);
-    formData.append("date", date);
+    formData.append("dob", dob);
     formData.append("password", password);
     formData.append("hobby", hobby);
     formData.append("favoriteGenre", favoriteGenre);
@@ -175,7 +176,9 @@ const RegisterScreen = ({ navigation }) => {
             placeholder="Date of Birth"
             placeholderTextColor="gray"
             value={date ? date.toLocaleDateString() : "Date of birth"}
-            editable={false} // Set TextInput to non-editable
+            editable={false}
+            onChangeText={setDOB}
+            // Set TextInput to non-editable
           ></TextInput>
           <View style={styles.iconContainer}>
             <Icon
