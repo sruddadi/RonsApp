@@ -24,7 +24,8 @@ const HomeScreen = ({ navigation }) => {
         const value = await response.json();
 
         if (value.status === "success") {
-          navigation.navigate("Menu");
+          const id = value.user.id;
+          navigation.navigate("Menu", { id });
         } else {
           navigation.navigate("Login");
         }

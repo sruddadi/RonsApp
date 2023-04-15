@@ -14,7 +14,7 @@ const MenuScreen = ({ route, navigation }) => {
   return (
     <SafeAreaView>
       <View style={styles.container}>
-        <Text style={styles.buttonText1}> Welcome {id}</Text>
+        <Text style={styles.buttonText1}> Welcome {id} </Text>
         <View style={styles.WelContainer}></View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
