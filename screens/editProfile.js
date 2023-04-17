@@ -10,47 +10,32 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 
 const EditProfileScreen = ({ route, navigation }) => {
-  // Extract the username and email from the route.params object
   const { username, email, contact, dob, hobby, genre } = route.params;
 
-  // State variables for storing the edited values
   const [editedUsername, setEditedUsername] = useState(username);
   const [editedEmail, setEditedEmail] = useState(email);
   const [editedContact, setEditedContact] = useState(contact);
   const [editedDOB, setEditedDOB] = useState(dob);
   const [editedHobby, setEditedHobby] = useState(hobby);
   const [editedGenre, setEditedGenre] = useState(genre);
-
-  // Function to handle updating the database with the edited values
   const updateProfile = () => {
-    // Prepare the updated profile data
-    const formData = new FormData();
-    formData.append("editedUsername", editedUsername);
-    formData.append("editedEmail", editedEmail);
-    formData.append("editedContact", editedContact);
-    formData.append("editedDOB", editedDOB);
-    formData.append("editedHobby", editedHobby);
-    formData.append("editedGenre", editedGenre);
-
-    // Send a POST request to the PHP API endpoint with the updated profile data
     fetch("https://sxu2906.uta.cloud/updateProfile.php", {
       method: "POST",
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
       },
-      body: formData,
+      body: `editedUsername=${editedUsername}&editedEmail=${editedEmail}&editedContact=${editedContact}&editedDOB=${editedDOB}&editedHobby=${editedHobby}&editedGenre=${editedGenre}`,
     })
-      .then((response) => response.json())
+      .then((response) => response.text())
       .then((data) => {
-        if (data.message === "Profile updated successfully") {
+        if (data === "Profile updated successfully") {
           Alert.alert("Success", "Profile updated successfully!", [
             {
               text: "OK",
               onPress: () => navigation.navigate("Setting"),
             },
           ]);
-        } else if (data.message === "Failed to register user") {
+        } else if (data === "Failed to register user") {
           Alert.alert("Error", "User already exists. Please try again!", [
             {
               text: "OK",

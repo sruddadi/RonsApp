@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Image, TouchableHighlight, StyleSheet } from "react-native";
-import YouTube from "react-native-youtube";
+// import YouTube from "react-native-youtube";
 
 const YouTubeThumbnailPlayer = () => {
   const [playing, setPlaying] = useState(false);

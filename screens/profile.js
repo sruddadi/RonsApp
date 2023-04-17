@@ -18,7 +18,7 @@ const ProfileScreen = ({ navigation }) => {
             method: "POST",
             headers: {
               Accept: "application/json",
-              "Content-Type": "application/json", // I added this line
+              "Content-Type": "application/json",
             },
           }
         );

@@ -10,14 +10,11 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 
 const ChangePasswordScreen = ({ navigation }) => {
-  // State variables for storing the current and new passwords
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
 
-  // Function to handle updating the password
   const updatePassword = () => {
-    // Validate if the new password and confirm new password match
     if (newPassword !== confirmNewPassword) {
       Alert.alert(
         "Error",
@@ -26,37 +23,30 @@ const ChangePasswordScreen = ({ navigation }) => {
       return;
     }
 
-    // Prepare the updated password data
-    const formData = new FormData();
-    formData.append("currentPassword", currentPassword);
-    formData.append("newPassword", newPassword);
-
-    // Send a POST request to the PHP API endpoint with the updated password data
     fetch("https://sxu2906.uta.cloud/updatePassword.php", {
       method: "POST",
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
       },
-      body: formData,
+      body: `currentPassword=${currentPassword}&newPassword=${newPassword}`,
     })
-      .then((response) => response.json())
+      .then((response) => response.text())
       .then((data) => {
-        if (data.message === "Password updated successfully") {
+        if (data === "Password updated successfully") {
           Alert.alert("Success", "Password updated successfully!", [
             {
               text: "OK",
               onPress: () => navigation.navigate("Setting"),
             },
           ]);
-        } else if (data.message === "Failed to update password") {
+        } else if (data === "Failed to update password. Please try again!") {
           Alert.alert("Error", "Failed to update password. Please try again!", [
             {
               text: "OK",
               onPress: () => navigation.navigate("Setting"),
             },
           ]);
-        } else if (data.message === "Old password doesn't match!") {
+        } else if (data === "Old password doesn't match!") {
           Alert.alert("Error", "Old password doesn't match!", [
             {
               text: "OK",
