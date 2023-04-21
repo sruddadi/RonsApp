@@ -13,7 +13,11 @@ import Details from "./screens/Details";
 import ProfileScreen from "./screens/profile";
 import EditProfileScreen from "./screens/editProfile";
 import ChangePasswordScreen from "./screens/changePassword";
-import VideoScreen from "./screens/video";
+import MainScreen from "./screens/main";
+import YoutubeScreen from "./screens/youtube";
+import YouVidScreen from "./screens/youVid";
+import QuizScoreScreen from "./screens/quizScore";
+import FavouriteScreen from "./screens/favourite";
 
 const Stack = createStackNavigator();
 
@@ -38,7 +42,11 @@ export default function App() {
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="EditProfile" component={EditProfileScreen} />
         <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
-        <Stack.Screen name="Video" component={VideoScreen} />
+        <Stack.Screen name="Main" component={MainScreen} />
+        <Stack.Screen name="QuizScore" component={QuizScoreScreen} />
+        <Stack.Screen name="Youtube" component={YoutubeScreen} />
+        <Stack.Screen name="YouVid" component={YouVidScreen} />
+        <Stack.Screen name="Favourite" component={FavouriteScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

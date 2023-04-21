@@ -10,7 +10,7 @@ import {
 import { Icon } from "react-native-elements";
 
 const MenuScreen = ({ route, navigation }) => {
-  const { id } = route.params; // ID to be used - for prateek
+  //const { id } = route.params; // ID to be used - for prateek
   return (
     <SafeAreaView>
       <View style={styles.container}>
@@ -37,25 +37,15 @@ const MenuScreen = ({ route, navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate("Login")}
+            // onPress={() => navigation.navigate("")}
           >
             <Text style={styles.buttonText}>R-sound Combinations</Text>
           </TouchableOpacity>
         </View>
 
         <View style={styles.buttonContainer1}>
-          <TouchableOpacity onPress={() => navigation.navigate("Video")}>
-            <Icon name="play" type="font-awesome" style={styles.button1}></Icon>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("Register")}>
-            <Icon name="film" type="font-awesome" style={styles.button1}></Icon>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("Register")}>
-            <Icon name="favorite" type="material" style={styles.button1}></Icon>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("Setting")}>
-            <Icon name="settings" type="material" style={styles.button1}></Icon>
-          </TouchableOpacity>
+          <Text></Text>
+          <Text></Text>
         </View>
       </View>
     </SafeAreaView>
