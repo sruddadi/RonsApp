@@ -3,6 +3,64 @@ import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 const SettingsScreen = ({ navigation }) => {
+  const [englishLevel, setLevel] = useState("");
+  useEffect(() => {
+    const getLevel = async () => {
+      try {
+        const response = await fetch(
+          "https://sxu2906.uta.cloud/getScores.php",
+          {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const value = await response.json();
+
+        if (value.status === "success") {
+          const totalScore =
+            parseInt(value.user.Quiz1) +
+            parseInt(value.user.Quiz2) +
+            parseInt(value.user.Quiz3) +
+            parseInt(value.user.Quiz4);
+
+          if ((totalScore / 400) * 100 <= 20) {
+            setLevel("Starter");
+          } else if (
+            (totalScore / 400) * 100 > 20 &&
+            (totalScore / 400) * 100 <= 40
+          ) {
+            setLevel("Beginner");
+          } else if (
+            (totalScore / 400) * 100 > 40 &&
+            (totalScore / 400) * 100 <= 60
+          ) {
+            setLevel("Intermediate");
+          } else if (
+            (totalScore / 400) * 100 > 60 &&
+            (totalScore / 400) * 100 <= 80
+          ) {
+            setLevel("Advanced");
+          } else {
+            setLevel("Expert");
+          }
+        } else {
+          Alert.alert("Something went wrong");
+        }
+      } catch (error) {
+        console.error("Fetch error:", error);
+      }
+    };
+    getLevel();
+  }, []);
+
   const handleLogout = async () => {
     Alert.alert(
       "Logout Confirmation",
@@ -47,7 +105,6 @@ const SettingsScreen = ({ navigation }) => {
       { cancelable: false }
     );
   };
-
   return (
     <View style={styles.container}>
       {/* Header */}
@@ -97,6 +154,12 @@ const SettingsScreen = ({ navigation }) => {
         <Text style={styles.settingLabel}>Your Native Language</Text>
         <TouchableOpacity>
           <Text style={{ fontWeight: "bold" }}>English</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.settingContainer}>
+        <Text style={styles.settingLabel}>Your English Level</Text>
+        <TouchableOpacity>
+          <Text style={{ fontWeight: "bold" }}>{englishLevel}</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.settingContainer}>

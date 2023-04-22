@@ -8,13 +8,14 @@ import {
 } from "react-native";
 
 import { Icon } from "react-native-elements";
-const UID = 'NSK';
+//const UID = 'NSK';
 const MenuScreen = ({ route, navigation }) => {
-  //const { id } = route.params; 
+
+  const { UID } = route.params; // ID to be used - for prateek
   return (
     <SafeAreaView>
       <View style={styles.container}>
-        <Text style={styles.buttonText1}> Welcome r</Text>
+        <Text style={styles.buttonText1}> Welcome </Text>
         <View style={styles.WelContainer}></View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
@@ -38,6 +39,7 @@ const MenuScreen = ({ route, navigation }) => {
           <TouchableOpacity
             style={styles.button}
             onPress={() => navigation.navigate("RS",{UID})}
+
           >
             <Text style={styles.buttonText}>R-sound Combinations</Text>
           </TouchableOpacity>
@@ -56,6 +58,8 @@ const MenuScreen = ({ route, navigation }) => {
           <TouchableOpacity onPress={() => navigation.navigate("Setting")}>
             <Icon name="settings" type="material" style={styles.button1}></Icon>
           </TouchableOpacity>
+          <Text></Text>
+          <Text></Text>
         </View>
       </View>
     </SafeAreaView>

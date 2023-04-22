@@ -13,9 +13,15 @@ import Details from "./screens/Details";
 import ProfileScreen from "./screens/profile";
 import EditProfileScreen from "./screens/editProfile";
 import ChangePasswordScreen from "./screens/changePassword";
-//import VideoScreen from "./screens/video";
 import RSTitles from "./screens/Rsound";
 import Favorites from "./screens/Favorite";
+import MainScreen from "./screens/main";
+import YoutubeScreen from "./screens/youtube";
+import YouVidScreen from "./screens/youVid";
+import QuizScoreScreen from "./screens/quizScore";
+import FavouriteScreen from "./screens/favourite";
+
+
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -27,6 +33,9 @@ export default function App() {
         }}
       >
        
+       
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Menu" component={MenuScreen} />
         <Stack.Screen name="Quiz" component={QuizScreen} />
         <Stack.Screen name="Phone" component={Titles} />
@@ -38,11 +47,13 @@ export default function App() {
         <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
         <Stack.Screen name="Setting" component={SettingScreen} />
         <Stack.Screen name="Profile" component={ProfileScreen} />
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="EditProfile" component={EditProfileScreen} />
         <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
-      
+        <Stack.Screen name="Main" component={MainScreen} />
+        <Stack.Screen name="QuizScore" component={QuizScoreScreen} />
+        <Stack.Screen name="Youtube" component={YoutubeScreen} />
+        <Stack.Screen name="YouVid" component={YouVidScreen} />
+        <Stack.Screen name="Favourite" component={FavouriteScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

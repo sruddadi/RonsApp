@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect} from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Alert, SafeAreaView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
@@ -8,12 +9,14 @@ const jsondata = require('../assets/data.json');
 const Details = ({ route, navigation }) => {
   const { UID,PID,titles } = route.params;
   const [data, setData] = useState(null);
+
   const [prevFavorites,setpreFavorites] = useState([]);
   const [isFavorite, setIsFavorite] = useState(false);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const item = jsondata.find(item => item.ID === PID);
+        const item = jsondata.find((item) => item.ID === PID);
         setData(item);
         const prevFav = await AsyncStorage.getItem('favor_'+UID); 
         setpreFavorites(JSON.parse(prevFav));
@@ -84,7 +87,6 @@ const Details = ({ route, navigation }) => {
   }
   };
   
-
   return (
     <View style={styles.container}>
       <View style={styles.Mainheader}>
