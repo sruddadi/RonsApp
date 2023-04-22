@@ -13,13 +13,13 @@ import ChangePasswordScreen from "./changePassword";
 import SettingsScreen from "./setting";
 import YoutubeScreen from "./youtube";
 import YouVidScreen from "./youVid";
-import FavouriteScreen from "./favourite";
+import Favorites from "./Favorite";
 
 // Screen names
 const homeName = "Home";
 const videoName = "Video";
 const settingsName = "Settings";
-const favoriteName = "Favorite";
+const favoriteName = "Favorites";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -118,7 +118,7 @@ const MainScreen = ({ route }) => {
       />
       <Tab.Screen
         name={favoriteName}
-        component={FavouriteScreen}
+        component={Favorites}
         options={{ headerShown: false, unmountOnBlur: true }}
         initialParams={{ UID: UID }}
       />
