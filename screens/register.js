@@ -172,10 +172,20 @@ const RegisterScreen = ({ navigation }) => {
         />
         <View style={{ flexDirection: "row" }}>
           <TextInput
-            style={styles.inputdate}
+            style={{
+              ...styles.inputdate,
+              color:
+                date.toDateString() === new Date().toDateString()
+                  ? "gray"
+                  : "white",
+            }}
             placeholder="Date of Birth"
             placeholderTextColor="gray"
-            value={date ? date.toLocaleDateString() : "Date of birth"}
+            value={
+              date.toDateString() === new Date().toDateString()
+                ? "Date of birth"
+                : date.toLocaleDateString()
+            }
             editable={false}
             onChangeText={setDOB}
             // Set TextInput to non-editable
@@ -295,7 +305,6 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     borderBottomWidth: 1,
     borderBottomColor: "gray",
-    color: "white",
   },
   datepicker: {
     width: "100%",

@@ -14,11 +14,23 @@ import {
 import { COLORS, SIZES } from "../constants";
 import { Ionicons } from "@expo/vector-icons";
 import data from "../data/Quiz1";
+import data2 from "../data/Quiz2";
+import data3 from "../data/Quiz3";
+import data4 from "../data/Quiz4";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const QuizScoreScreen = ({ navigation, route }) => {
   const { level } = route.params;
-  const allQuestions = data;
+  let allQuestions = 0;
+  if (level === "Quiz 1") {
+    allQuestions = data;
+  } else if (level === "Quiz 2") {
+    allQuestions = data2;
+  } else if (level === "Quiz 3") {
+    allQuestions = data3;
+  } else {
+    allQuestions = data4;
+  }
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [currentOptionSelected, setCurrentOptionSelected] = useState(null);
   const [correctOption, setCorrectOption] = useState(null);

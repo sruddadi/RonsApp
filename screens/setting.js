@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+  StatusBar,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 const SettingsScreen = ({ navigation }) => {
@@ -107,10 +114,10 @@ const SettingsScreen = ({ navigation }) => {
   };
   return (
     <View style={styles.container}>
-      {/* Header */}
+      <StatusBar backgroundColor="black" barStyle="light-content" />
       <View style={styles.headerContainer}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="caret-back-outline" size={24} color="black" />
+          <Ionicons name="caret-back-outline" size={24} color="white" />
         </TouchableOpacity>
         <Text style={styles.headerText}>Settings</Text>
         <View />
@@ -180,14 +187,15 @@ const SettingsScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 80,
     backgroundColor: "white",
   },
   headerContainer: {
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: 16,
-    marginBottom: 40,
+    marginBottom: 20,
+    backgroundColor: "black",
+    height: 60,
   },
   headerText: {
     fontSize: 24,
@@ -195,6 +203,7 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: "center",
     marginRight: 24,
+    color: "white",
   },
   contactContainer: {
     alignItems: "center",

@@ -75,10 +75,11 @@ const YouVidScreen = ({ navigation, route }) => {
   const handleThumbnailPress = (video, sectionTitle) => {
     navigation.navigate("YouVid", {
       videoId: video.id,
+      videoTitle: video.title,
       sectionTitle,
     });
   };
-  const { videoId, sectionTitle } = route.params;
+  const { videoId, videoTitle, sectionTitle } = route.params;
 
   return (
     <View style={styles.container}>
@@ -91,7 +92,10 @@ const YouVidScreen = ({ navigation, route }) => {
       </View>
       <YoutubePlayer height={300} play={true} videoId={videoId} />
       <View style={styles.videoTitleContainer}>
-        <Text style={styles.videoHeading}>Related Videos</Text>
+        <Text style={styles.videoHeading}>{videoTitle}</Text>
+      </View>
+      <View style={styles.dividerContainer}>
+        <View style={styles.divider} />
       </View>
       <ScrollView style={styles.videoContainer}>
         <View>
@@ -140,7 +144,7 @@ const styles = StyleSheet.create({
     marginBottom: 450,
   },
   headerContainer: {
-    paddingTop: 80,
+    paddingTop: 60,
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: 16,
@@ -148,6 +152,9 @@ const styles = StyleSheet.create({
   },
   videoContainer: {
     top: -60,
+  },
+  textContainer: {
+    top: -10,
   },
   headerText: {
     fontSize: 24,
@@ -172,18 +179,32 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 16,
   },
+  dividerContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%",
+    top: -50,
+    marginBottom: 16,
+  },
+  divider: {
+    flex: 1,
+    height: 1,
+    backgroundColor: "#ccc",
+  },
   videoContainer: {
     marginBottom: 20,
+    marginTop: -66,
   },
   videoTitleContainer: {
-    top: -40,
-    marginBottom: -30,
+    top: -60,
   },
   thumbnail: {
-    width: 380,
+    width: 360,
     height: 200,
     resizeMode: "cover",
     borderRadius: 5,
+    marginTop: 80,
+    marginBottom: 5,
     marginRight: 10,
   },
   button: {

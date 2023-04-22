@@ -1,8 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet,ScrollView, TextInput } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Ionicons } from '@expo/vector-icons';
-const data = require('../assets/data.json');
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+  TextInput,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Ionicons } from "@expo/vector-icons";
+const data = require("../assets/data.json");
 const VowTitles = ({ navigation }) => {
   const [titles, setTitles] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -32,18 +39,16 @@ const VowTitles = ({ navigation }) => {
     );
   });
   return (
-     
     <View style={styles.container}>
       <View style={styles.Mainheader}>
-      <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={24} color="black" />
         </TouchableOpacity>
-       <Text style={styles.title}>
-        Vowels with "{searchQuery}" in IPA or Examples
-      </Text>
+        <Text style={styles.title}>
+          Vowels with "{searchQuery}" in IPA or Examples
+        </Text>
       </View>
       <View style={styles.header}>
-        
         <TextInput
           style={styles.searchInput}
           value={searchQuery}
@@ -51,7 +56,7 @@ const VowTitles = ({ navigation }) => {
           placeholder="Search..."
         />
       </View>
-     
+
       <ScrollView contentContainerStyle={styles.tilesContainer}>
         {filteredData.map((item, index) => (
           <TouchableOpacity
@@ -66,7 +71,6 @@ const VowTitles = ({ navigation }) => {
         ))}
       </ScrollView>
     </View>
-    
   );
 };
 
@@ -77,11 +81,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 50,
   },
-  Mainheader:{
+  Mainheader: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 16,
-    
   },
   header: {
     flexDirection: "row",

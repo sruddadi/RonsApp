@@ -5,16 +5,18 @@ import {
   Text,
   View,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 
 import { Icon } from "react-native-elements";
+import { ScrollView } from "react-native-gesture-handler";
 
 const MenuScreen = ({ route, navigation }) => {
-  //const { id } = route.params; // ID to be used - for prateek
+  const { UID } = route.params;
   return (
-    <SafeAreaView>
+    <ScrollView>
       <View style={styles.container}>
-        <Text style={styles.buttonText1}> Welcome </Text>
+        <Text style={styles.buttonText1}> Welcome {UID} </Text>
         <View style={styles.WelContainer}></View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
@@ -37,7 +39,7 @@ const MenuScreen = ({ route, navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
-            // onPress={() => navigation.navigate("")}
+            onPress={() => Alert.alert({ UID })}
           >
             <Text style={styles.buttonText}>R-sound Combinations</Text>
           </TouchableOpacity>
@@ -48,7 +50,7 @@ const MenuScreen = ({ route, navigation }) => {
           <Text></Text>
         </View>
       </View>
-    </SafeAreaView>
+    </ScrollView>
   );
 };
 

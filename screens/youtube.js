@@ -77,6 +77,7 @@ const YoutubeScreen = () => {
   const handleThumbnailPress = (video, sectionTitle) => {
     navigation.navigate("YouVid", {
       videoId: video.id,
+      videoTitle: video.title,
       sectionTitle,
     });
   };
@@ -137,9 +138,11 @@ const YoutubeScreen = () => {
           ))}
         </View>
       </ScrollView>
-      <View style={styles.videoTitleContainer}>
-        <Text style={styles.videoTitle}>Sounds American</Text>
-      </View>
+      <ScrollView horizontal={true}>
+        <View style={styles.thumbnailsContainer1}>
+          <Text style={styles.videoTitle}></Text>
+        </View>
+      </ScrollView>
       <ScrollView horizontal={true}>
         <View style={styles.thumbnailsContainer1}>
           <Text style={styles.videoTitle}></Text>
@@ -152,7 +155,7 @@ const YoutubeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 80,
+    paddingTop: 60,
     backgroundColor: "white",
   },
   imagecontainer: {

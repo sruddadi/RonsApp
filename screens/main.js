@@ -1,4 +1,5 @@
-import * as React from "react";
+import React, { useEffect } from "react";
+import { Alert } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -67,7 +68,9 @@ const SettingStack = () => {
   );
 };
 
-const MainScreen = () => {
+const MainScreen = ({ route }) => {
+  const { UID } = route.params;
+
   return (
     <Tab.Navigator
       initialRouteName={homeName}
@@ -105,22 +108,24 @@ const MainScreen = () => {
       <Tab.Screen
         name={homeName}
         component={HomeScreen}
-        options={{ headerShown: false }}
+        options={{ headerShown: false, unmountOnBlur: true }}
+        initialParams={{ UID: UID }}
       />
       <Tab.Screen
         name={videoName}
         component={YoutubeStack}
-        options={{ headerShown: false }}
+        options={{ headerShown: false, unmountOnBlur: true }}
       />
       <Tab.Screen
         name={favoriteName}
         component={FavouriteScreen}
-        options={{ headerShown: false }}
+        options={{ headerShown: false, unmountOnBlur: true }}
+        initialParams={{ UID: UID }}
       />
       <Tab.Screen
         name={settingsName}
         component={SettingStack}
-        options={{ headerShown: false }}
+        options={{ headerShown: false, unmountOnBlur: true }}
       />
     </Tab.Navigator>
   );

@@ -25,7 +25,7 @@ const HomeScreen = ({ navigation }) => {
 
         if (value.status === "success") {
           const id = value.user.id;
-          navigation.navigate("Main");
+          navigation.navigate("Main", { UID: id });
         } else {
           navigation.navigate("Login");
         }

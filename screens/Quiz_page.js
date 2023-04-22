@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Image,
   Alert,
+  ScrollView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -60,7 +61,7 @@ const QuizScreen = ({ navigation }) => {
         <Text style={styles.headerText}>Quizzes</Text>
         <View />
       </View>
-      <View style={styles.buttonContainer}>
+      <ScrollView style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
           onPress={() => navigation.navigate("QuizScore", { level: "Quiz 1" })}
@@ -89,7 +90,7 @@ const QuizScreen = ({ navigation }) => {
           <Text style={styles.buttonText}>Quiz - IV</Text>
           <Progress.Bar progress={q4 / 100} width={275} color={"black"} />
         </TouchableOpacity>
-      </View>
+      </ScrollView>
     </View>
   );
 };
@@ -97,7 +98,7 @@ const QuizScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 50,
+    paddingTop: 30,
     backgroundColor: "white",
   },
   headerContainer: {
@@ -128,7 +129,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingVertical: 45,
     paddingHorizontal: 50,
-    width: 390,
+    width: 370,
     margin: 10,
     textAlign: "center",
     textDecoration: "none",

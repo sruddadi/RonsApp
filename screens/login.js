@@ -33,7 +33,7 @@ const LoginScreen = ({ navigation }) => {
         if (data.status === "success") {
           const id = data.user.id;
           Alert.alert("Success", "Login successful!");
-          navigation.navigate("Main");
+          navigation.navigate("Main", { UID: id });
         } else {
           Alert.alert("Error", "Invalid username or password.");
         }

@@ -10,7 +10,8 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 const data = require("../assets/data.json");
-const FavouriteScreen = ({ navigation }) => {
+const FavouriteScreen = ({ navigation, route }) => {
+  const { UID } = route.params;
   const [titles, setTitles] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -54,7 +55,7 @@ const FavouriteScreen = ({ navigation }) => {
         ) {
           Alert.alert("Failed to fetch favourite");
         } else if (res.status === "error" && res.message === "No Records") {
-          Alert.alert("No favorites");
+          Alert.alert("No favorites", UID);
         } else {
           Alert.alert("Failed");
         }

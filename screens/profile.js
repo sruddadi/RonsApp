@@ -81,9 +81,12 @@ const ProfileScreen = ({ navigation }) => {
           <Text style={styles.dataText}>{username}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.editContainer}>
-          <Text style={styles.editText} onPress={editUsername}>
-            Edit
-          </Text>
+          <Ionicons
+            style={styles.editIcon}
+            name="create-outline"
+            size={30}
+            onPress={editUsername}
+          ></Ionicons>
         </TouchableOpacity>
       </View>
       <View style={styles.settingContainer}>
@@ -92,9 +95,12 @@ const ProfileScreen = ({ navigation }) => {
           <Text style={styles.dataText}>{email}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.editContainer}>
-          <Text style={styles.editText} onPress={editEmail}>
-            Edit
-          </Text>
+          <Ionicons
+            style={styles.editIcon}
+            name="create-outline"
+            size={30}
+            onPress={editEmail}
+          ></Ionicons>
         </TouchableOpacity>
       </View>
       <View style={styles.settingContainer}>
@@ -103,9 +109,12 @@ const ProfileScreen = ({ navigation }) => {
           <Text style={styles.dataText}>{contact}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.editContainer}>
-          <Text style={styles.editText} onPress={editContact}>
-            Edit
-          </Text>
+          <Ionicons
+            style={styles.editIcon}
+            name="create-outline"
+            size={30}
+            onPress={editContact}
+          ></Ionicons>
         </TouchableOpacity>
       </View>
       <View style={styles.settingContainer}>
@@ -114,9 +123,12 @@ const ProfileScreen = ({ navigation }) => {
           <Text style={styles.dataText}>{dob}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.editContainer}>
-          <Text style={styles.editText} onPress={editDOB}>
-            Edit
-          </Text>
+          <Ionicons
+            style={styles.editIcon}
+            name="create-outline"
+            size={30}
+            onPress={editDOB}
+          ></Ionicons>
         </TouchableOpacity>
       </View>
       <View style={styles.settingContainer}>
@@ -125,9 +137,12 @@ const ProfileScreen = ({ navigation }) => {
           <Text style={styles.dataText}>{hobby}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.editContainer}>
-          <Text style={styles.editText} onPress={editHobby}>
-            Edit
-          </Text>
+          <Ionicons
+            style={styles.editIcon}
+            name="create-outline"
+            size={30}
+            onPress={editHobby}
+          ></Ionicons>
         </TouchableOpacity>
       </View>
       <View style={styles.settingContainer}>
@@ -136,9 +151,12 @@ const ProfileScreen = ({ navigation }) => {
           <Text style={styles.dataText}>{genre}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.editContainer}>
-          <Text style={styles.editText} onPress={editGenre}>
-            Edit
-          </Text>
+          <Ionicons
+            style={styles.editIcon}
+            name="create-outline"
+            size={30}
+            onPress={editGenre}
+          ></Ionicons>
         </TouchableOpacity>
       </View>
     </View>
@@ -147,18 +165,16 @@ const ProfileScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 80,
+    paddingTop: 60,
     backgroundColor: "white",
   },
   dataText: {
     color: "gray",
     top: 3,
   },
-  editText: {
+  editIcon: {
     top: 3,
     textAlign: "right",
-    fontWeight: "bold",
-    textDecorationLine: "underline",
   },
   headerContainer: {
     flexDirection: "row",
@@ -178,10 +194,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   editContainer: {
-    marginLeft: 350,
-    top: -35,
-    marginBottom: -10,
-    justifyContent: "center",
+    top: -40,
+    marginBottom: -20,
   },
   settingContainer: {
     justifyContent: "space-between",
