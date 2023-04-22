@@ -16,7 +16,11 @@ const VowTitles = ({ navigation }) => {
   useEffect(() => {
     const vowelData = data.filter((item) => {
       for (const key in item) {
-        if (typeof item[key] === "string" && item[key].includes("vowels")) {
+        if (
+          typeof item[key] === "string" &&
+          item[key].includes("Vowels") &&
+          !item[key].includes("R")
+        ) {
           return true;
         }
       }
@@ -25,7 +29,7 @@ const VowTitles = ({ navigation }) => {
     setTitles(vowelData);
   }, []);
   const handleTilePress = (PID) => {
-    navigation.navigate("Details", { PID });
+    navigation.navigate("Details", { UID, PID, titles });
   };
 
   const filteredData = titles.filter((item) => {

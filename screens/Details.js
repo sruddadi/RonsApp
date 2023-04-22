@@ -1,10 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
-import { Ionicons, AntDesign } from "@expo/vector-icons";
-const jsondata = require("../assets/data.json");
+
+import React, { useState, useEffect} from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, Alert, SafeAreaView } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import * as Speech from 'expo-speech';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const jsondata = require('../assets/data.json');
+
 const Details = ({ route, navigation }) => {
-  const { PID } = route.params;
+  const { UID,PID,titles } = route.params;
   const [data, setData] = useState(null);
+
+  const [prevFavorites,setpreFavorites] = useState([]);
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
@@ -12,174 +18,202 @@ const Details = ({ route, navigation }) => {
       try {
         const item = jsondata.find((item) => item.ID === PID);
         setData(item);
-
-        const response = await fetch(
-          "https://sxu2906.uta.cloud/getFavorites.php",
-          {
-            method: "POST",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const res = await response.json();
-        if (res.status === "success") {
-          const { favorites } = res;
-
-          if (favorites.includes(item.ID.toString())) {
-            setIsFavorite(true);
-          }
+        const prevFav = await AsyncStorage.getItem('favor_'+UID); 
+        setpreFavorites(JSON.parse(prevFav));
+        if (prevFav !== null && prevFav.includes(PID.toString())) {
+          setIsFavorite(true);
         }
       } catch (error) {
         console.error(error);
       }
     };
-
     fetchData();
   }, [PID]);
-
-  const updateFavoriteStatus = async () => {
-    try {
-      if (isFavorite) {
-        fetch("https://sxu2906.uta.cloud/deleteFavorites.php", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: `PID=${PID}`,
-        })
-          .then((response) => response.text())
-          .then((data) => {
-            if (data === "Favorite deleted successfully") {
-              Alert.alert("Success", "Removed from Favorite list", [
-                {
-                  text: "OK",
-                },
-              ]);
-            } else if (
-              data === "Failed to deleted Favorite. Please try again!"
-            ) {
-              Alert.alert(
-                "Error",
-                "Failed to deleted Favorite. Please try again!",
-                [
-                  {
-                    text: "OK",
-                  },
-                ]
-              );
-            } else {
-              Alert.alert("Error", "Failed to deleted Favorites");
-            }
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-          });
-      } else {
-        fetch("https://sxu2906.uta.cloud/updateFavorites.php", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: `PID=${PID}&isFavorite=${!isFavorite}`,
-        })
-          .then((response) => response.text())
-          .then((data) => {
-            if (data === "Favorite added successfully") {
-              Alert.alert("Success", " Added into Favorite list", [
-                {
-                  text: "OK",
-                },
-              ]);
-            } else if (data === "Failed to add Favorite. Please try again!") {
-              Alert.alert(
-                "Error",
-                "Failed to add Favorite. Please try again!",
-                [
-                  {
-                    text: "OK",
-                  },
-                ]
-              );
-            } else {
-              Alert.alert("Error", "Failed to add Favorites");
-            }
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-          });
-      }
-    } catch (error) {
-      console.error(error);
+  const playSound = (text) => {
+    if (text) {
+      Speech.speak(text);
     }
   };
 
+  const handleFavorite = () => {
+    if (data && data.IPA) {
+      // Check if current data is already a favorite
+      if(prevFavorites !== null){
+      const isFavorite = prevFavorites.some(item => item.ID === data.ID);
+      if (isFavorite) {
+        // Remove from favorites
+        const updatedFavorites = prevFavorites.filter(item => item.ID !== data.ID);
+        setpreFavorites(updatedFavorites);
+        AsyncStorage.setItem('favor_'+UID, JSON.stringify(updatedFavorites));
+        
+      } else {
+        // Add to favorites
+        const newFavorite = { ID: data.ID, IPA: data.IPA  };
+        setpreFavorites(prevFavorites => [...prevFavorites, newFavorite]);
+        AsyncStorage.setItem('favor_'+UID, JSON.stringify([...prevFavorites, newFavorite]));
+        
+      }
+      
+    }else{
+    const newFavorite = { ID: data.ID, IPA: data.IPA  };
+    AsyncStorage.setItem('favor_'+UID, JSON.stringify([newFavorite]));
+    setpreFavorites([newFavorite])
+    }
+    setIsFavorite(!isFavorite);
+  }
+  };
+  
+
+  const handleNext = () => {
+    if (data) {
+    const index = titles.findIndex(item => item.ID === data.ID);
+    if (index < titles.length - 1) {
+      const nextTitle = titles[index + 1];
+      const nextItem = jsondata.find(item => item.ID === nextTitle.ID);
+      navigation.replace('Details', { PID: nextItem.ID, titles });
+    }
+    
+  }
+  };
+  
+  const handlePrevious = () => {
+    if (data) {
+    const index = titles.findIndex(item => item.ID === data.ID);
+    if (index > 0) {
+      const previousTitle = titles[index - 1];
+      const previousItem = jsondata.find(item => item.ID === previousTitle.ID);
+      navigation.replace('Details', { PID: previousItem.ID, titles });
+    }
+  }
+  };
+  
   return (
     <View style={styles.container}>
       <View style={styles.Mainheader}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity onPress={() => navigation.goBack('PreviousScreenKey')}>
           <Ionicons name="arrow-back" size={24} color="black" />
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            setIsFavorite(!isFavorite);
-            updateFavoriteStatus();
-          }}
-        >
-          <AntDesign
-            name={isFavorite ? "star" : "staro"}
-            size={24}
-            color="black"
-            style={{ marginLeft: 10 }}
+        <Text style={styles.title}>Explanation</Text>
+        <TouchableOpacity onPress={handleFavorite}>
+        <Ionicons
+            name={isFavorite ? 'heart' : 'heart-outline'}
+            size={32}
+            color={isFavorite ? 'red' : 'black'}
           />
+       
+          </TouchableOpacity>
+  </View>
+  <SafeAreaView style={styles.content}>
+    {data ? (
+      <View style={styles.detailsContainer}>
+        <Text style={styles.ipa}>{data.IPA}</Text>
+        <Text style={styles.explanation}>{data.Explanation}</Text>
+        {data.Examples && (
+  <View style={styles.examplesContainer}>
+    <Text style={styles.examplesTitle}>Examples:</Text>
+    {data.Examples.split(', ').map((example, index) => (
+      example && ( // Added check for undefined value
+        <TouchableOpacity onPress={() => playSound(example)} key={index}>
+          <Text style={styles.example}>
+            {example}
+          </Text>
         </TouchableOpacity>
-        <Text style={styles.title}> Explanation</Text>
+      )
+    ))}
+  </View>
+)}
       </View>
-      {data ? (
-        <View style={styles.content}>
-          <Text style={styles.title1}>{data.IPA}</Text>
-          <Text style={styles.examples}>{data.Examples}</Text>
-        </View>
-      ) : (
-        <Text>Loading...</Text>
-      )}
-    </View>
-  );
+    ) : (
+      <Text style={styles.loadingText}>Loading...</Text>
+    )}
+  </SafeAreaView>
+  <View style={styles.footer}>
+    <TouchableOpacity onPress={handlePrevious} disabled={titles.findIndex(item => item.ID === data?.ID) === 0}>
+      <Ionicons
+        name="arrow-back-circle-outline"
+        size={48}
+        color={titles.findIndex(item => item.ID === data?.ID) === 0 ? 'gray' : 'black'}
+      />
+    </TouchableOpacity>
+    <TouchableOpacity onPress={handleNext} disabled={titles.findIndex(item => item.ID === data?.ID) === titles.length - 1}>
+      <Ionicons
+        name="arrow-forward-circle-outline"
+        size={48}
+        color={titles.findIndex(item => item.ID === data?.ID) === titles.length - 1 ? 'gray' : 'black'}
+      />
+    </TouchableOpacity>
+  </View>
+</View>
+);
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-    paddingHorizontal: 16,
-    paddingTop: 50,
-  },
-  Mainheader: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 16,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 16,
-    marginLeft: 100,
-  },
-  content: {
-    alignItems: "center",
-  },
-  title1: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 10,
-  },
-  examples: {
-    fontSize: 18,
-  },
+container: {
+marginTop: 40,
+flex: 1,
+backgroundColor: 'white',
+},
+Mainheader: {
+flexDirection: 'row',
+justifyContent: 'space-between',
+alignItems: 'center',
+paddingHorizontal: 20,
+paddingTop: 10,
+},
+title: {
+fontSize: 24,
+fontWeight: 'bold',
+textAlign: 'center',
+flex: 1,
+marginLeft: 20,
+},
+content: {
+flex: 1,
+justifyContent: 'center',
+alignItems: 'center',
+paddingHorizontal: 20,
+paddingBottom: 20,
+},
+detailsContainer: {
+width: '100%',
+alignItems: 'center',
+},
+ipa: {
+fontSize: 36,
+fontWeight: 'bold',
+marginBottom: 10,
+textAlign: 'center',
+},
+explanation: {
+fontSize: 18,
+marginBottom: 20,
+textAlign: 'center',
+},
+examplesContainer: {
+width: '100%',
+},
+examplesTitle: {
+fontSize: 18,
+fontWeight: 'bold',
+marginBottom: 10,
+},
+example: {
+fontSize: 16,
+marginBottom: 5,
+color: 'blue',
+textDecorationLine:'underline', 
+},
+loadingText: {
+fontSize: 18,
+fontWeight: 'bold',
+},
+footer: {
+flexDirection: 'row',
+justifyContent: 'space-between',
+alignItems: 'center',
+paddingHorizontal: 40,
+paddingBottom: 20,
+},
 });
 
 export default Details;

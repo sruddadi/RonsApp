@@ -13,11 +13,14 @@ import Details from "./screens/Details";
 import ProfileScreen from "./screens/profile";
 import EditProfileScreen from "./screens/editProfile";
 import ChangePasswordScreen from "./screens/changePassword";
+import RSTitles from "./screens/Rsound";
+import Favorites from "./screens/Favorite";
 import MainScreen from "./screens/main";
 import YoutubeScreen from "./screens/youtube";
 import YouVidScreen from "./screens/youVid";
 import QuizScoreScreen from "./screens/quizScore";
 import FavouriteScreen from "./screens/favourite";
+
 
 const Stack = createStackNavigator();
 
@@ -29,12 +32,16 @@ export default function App() {
           headerShown: false,
         }}
       >
+       
+       
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Menu" component={MenuScreen} />
         <Stack.Screen name="Quiz" component={QuizScreen} />
         <Stack.Screen name="Phone" component={Titles} />
         <Stack.Screen name="Vow" component={VowTitles} />
+        <Stack.Screen name="RS" component={RSTitles} />
+        <Stack.Screen name="FAV" component={Favorites} />
         <Stack.Screen name="Details" component={Details} />
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
@@ -51,3 +58,4 @@ export default function App() {
     </NavigationContainer>
   );
 }
+ /* <Stack.Screen name="Video" component={VideoScreen} />*/

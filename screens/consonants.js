@@ -3,9 +3,10 @@ import { View, Text, TouchableOpacity, StyleSheet,ScrollView,  TextInput } from 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 const data = require('../assets/data.json');
-const Titles = ({ navigation }) => {
+const Titles = ({ route,navigation }) => {
   const [titles, setTitles] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const { UID } = route.params; 
   useEffect(() => {
     const consonantData = data.filter((item) => {
       for (const key in item) {
@@ -18,7 +19,7 @@ const Titles = ({ navigation }) => {
        setTitles(consonantData);
   }, []);
   const handleTilePress = (PID) => {
-    navigation.navigate("Details", { PID });
+    navigation.navigate("Details", { UID, PID, titles });
   };
 
   const filteredData = titles.filter((item) => {

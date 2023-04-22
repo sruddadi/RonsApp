@@ -12,7 +12,7 @@ import { Icon } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 
 const MenuScreen = ({ route, navigation }) => {
-  const { UID } = route.params;
+  const { UID } = route.params; // ID to be used - for prateek
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -21,13 +21,13 @@ const MenuScreen = ({ route, navigation }) => {
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate("Phone")}
+            onPress={() => navigation.navigate("Phone", { UID })}
           >
             <Text style={styles.buttonText}>Consonants</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate("Vow")}
+            onPress={() => navigation.navigate("Vow", { UID })}
           >
             <Text style={styles.buttonText}>Vowels</Text>
           </TouchableOpacity>
@@ -39,13 +39,25 @@ const MenuScreen = ({ route, navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => Alert.alert({ UID })}
+            onPress={() => navigation.navigate("RS", { UID })}
           >
             <Text style={styles.buttonText}>R-sound Combinations</Text>
           </TouchableOpacity>
         </View>
 
         <View style={styles.buttonContainer1}>
+          <TouchableOpacity onPress={() => navigation.navigate("Video")}>
+            <Icon name="play" type="font-awesome" style={styles.button1}></Icon>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+            <Icon name="film" type="font-awesome" style={styles.button1}></Icon>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("FAV", { UID })}>
+            <Icon name="favorite" type="material" style={styles.button1}></Icon>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("Setting")}>
+            <Icon name="settings" type="material" style={styles.button1}></Icon>
+          </TouchableOpacity>
           <Text></Text>
           <Text></Text>
         </View>
