@@ -8,24 +8,24 @@ import {
 } from "react-native";
 
 import { Icon } from "react-native-elements";
-
+const UID = 'NSK';
 const MenuScreen = ({ route, navigation }) => {
-  const { id } = route.params; // ID to be used - for prateek
+  //const { id } = route.params; 
   return (
     <SafeAreaView>
       <View style={styles.container}>
-        <Text style={styles.buttonText1}> Welcome {id} </Text>
+        <Text style={styles.buttonText1}> Welcome r</Text>
         <View style={styles.WelContainer}></View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate("Phone")}
+            onPress={() => navigation.navigate("Phone",{UID})}
           >
             <Text style={styles.buttonText}>Consonants</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate("Vow")}
+            onPress={() => navigation.navigate("Vow",{UID})}
           >
             <Text style={styles.buttonText}>Vowels</Text>
           </TouchableOpacity>
@@ -37,7 +37,7 @@ const MenuScreen = ({ route, navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate("Login")}
+            onPress={() => navigation.navigate("RS",{UID})}
           >
             <Text style={styles.buttonText}>R-sound Combinations</Text>
           </TouchableOpacity>
@@ -50,7 +50,7 @@ const MenuScreen = ({ route, navigation }) => {
           <TouchableOpacity onPress={() => navigation.navigate("Register")}>
             <Icon name="film" type="font-awesome" style={styles.button1}></Icon>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+          <TouchableOpacity onPress={() => navigation.navigate("FAV",{UID})}>
             <Icon name="favorite" type="material" style={styles.button1}></Icon>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate("Setting")}>

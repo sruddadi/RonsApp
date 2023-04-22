@@ -3,23 +3,23 @@ import { View, Text, TouchableOpacity, StyleSheet,ScrollView, TextInput } from '
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 const data = require('../assets/data.json');
-const VowTitles = ({route, navigation }) => {
-  const { UID } = route.params; 
+const RSTitles = ({ route,navigation }) => {
+  const { id } = route.params; 
   const [titles, setTitles] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   useEffect(() => {
-    const vowelData = data.filter((item) => {
+    const RSData = data.filter((item) => {
       for (const key in item) {
-        if (typeof item[key] === "string" && item[key].includes("Vowels") && !item[key].includes('R')) {
+        if (typeof item[key] === "string" && item[key].includes("R") && !item[key].includes("Consonants","Full RSs")) {
           return true;
         }
       }
       return false;
     });
-    setTitles(vowelData);
+    setTitles(RSData);
   }, []);
   const handleTilePress = (PID) => {
-    navigation.navigate("Details", {UID, PID , titles});
+    navigation.navigate("Details", { PID, titles });
   };
 
   const filteredData = titles.filter((item) => {
@@ -40,7 +40,7 @@ const VowTitles = ({route, navigation }) => {
           <Ionicons name="arrow-back" size={24} color="black" />
         </TouchableOpacity>
        <Text style={styles.title}>
-        Vowels with "{searchQuery}" in IPA or Examples
+        R sounds with "{searchQuery}" in IPA or Examples
       </Text>
       </View>
       <View style={styles.header}>
@@ -124,4 +124,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default VowTitles;
+export default RSTitles;
