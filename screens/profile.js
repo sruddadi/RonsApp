@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  StatusBar,
+  Platform,
+} from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 
 const ProfileScreen = ({ navigation }) => {
@@ -7,46 +15,49 @@ const ProfileScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [contact, setContact] = useState("");
   const [dob, setDob] = useState("");
-  const [hobby, setHobby] = useState("");
-  const [genre, setGenre] = useState("");
-  useEffect(() => {
-    const fetchUsername = async () => {
-      try {
-        const response = await fetch(
-          "https://sxu2906.uta.cloud/getUsername.php",
-          {
-            method: "POST",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-          }
-        );
+  const [fname, setFname] = useState("");
+  const [lname, setLname] = useState("");
 
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
+  const fetchUsername = async () => {
+    try {
+      const response = await fetch(
+        "https://sxu2906.uta.cloud/getUsername.php",
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
         }
+      );
 
-        const data = await response.json();
-
-        if (data.status === "success") {
-          const { username, email, contact, dob, hobby, genre } = data.user;
-          setUsername(username);
-          setEmail(email);
-          setContact(contact);
-          setDob(dob);
-          setHobby(hobby);
-          setGenre(genre);
-        } else {
-          Alert.alert("Failed");
-        }
-      } catch (error) {
-        console.error("Fetch error:", error);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
       }
-    };
 
-    fetchUsername();
-  }, []);
+      const data = await response.json();
+
+      if (data.status === "success") {
+        const { fname, lname, username, email, contact, dob } = data.user;
+        setUsername(username);
+        setEmail(email);
+        setContact(contact);
+        setDob(dob);
+        setFname(fname);
+        setLname(lname);
+      } else {
+        Alert.alert("Failed");
+      }
+    } catch (error) {
+      console.error("Fetch error:", error);
+    }
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchUsername();
+    }, [])
+  );
   const editUsername = () => {
     navigation.navigate("EditProfile", { username });
   };
@@ -59,21 +70,53 @@ const ProfileScreen = ({ navigation }) => {
   const editDOB = () => {
     navigation.navigate("EditProfile", { dob });
   };
-  const editHobby = () => {
-    navigation.navigate("EditProfile", { hobby });
+  const editFname = () => {
+    navigation.navigate("EditProfile", { fname });
   };
-  const editGenre = () => {
-    navigation.navigate("EditProfile", { genre });
+  const editLname = () => {
+    navigation.navigate("EditProfile", { lname });
   };
 
   return (
     <View style={styles.container}>
+      <StatusBar backgroundColor="black" barStyle="light-content" />
       <View style={styles.headerContainer}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="caret-back-outline" size={24} color="black" />
+        <TouchableOpacity
+          style={styles.backContainer}
+          onPress={() => navigation.goBack()}
+        >
+          <Ionicons name="caret-back-outline" size={24} color="white" />
         </TouchableOpacity>
         <Text style={styles.headerText}>Profile</Text>
         <View />
+      </View>
+      <View style={styles.settingContainer}>
+        <Text style={styles.settingLabel}>First Name</Text>
+        <TouchableOpacity style={styles.arrowContainer}>
+          <Text style={styles.dataText}>{fname}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.editContainer}>
+          <Ionicons
+            style={styles.editIcon}
+            name="create-outline"
+            size={30}
+            onPress={editFname}
+          ></Ionicons>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.settingContainer}>
+        <Text style={styles.settingLabel}>Last Name</Text>
+        <TouchableOpacity style={styles.arrowContainer}>
+          <Text style={styles.dataText}>{lname}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.editContainer}>
+          <Ionicons
+            style={styles.editIcon}
+            name="create-outline"
+            size={30}
+            onPress={editLname}
+          ></Ionicons>
+        </TouchableOpacity>
       </View>
       <View style={styles.settingContainer}>
         <Text style={styles.settingLabel}>Username</Text>
@@ -117,55 +160,12 @@ const ProfileScreen = ({ navigation }) => {
           ></Ionicons>
         </TouchableOpacity>
       </View>
-      <View style={styles.settingContainer}>
-        <Text style={styles.settingLabel}>Date of Birth</Text>
-        <TouchableOpacity style={styles.arrowContainer}>
-          <Text style={styles.dataText}>{dob}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.editContainer}>
-          <Ionicons
-            style={styles.editIcon}
-            name="create-outline"
-            size={30}
-            onPress={editDOB}
-          ></Ionicons>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.settingContainer}>
-        <Text style={styles.settingLabel}>Hobby</Text>
-        <TouchableOpacity style={styles.arrowContainer}>
-          <Text style={styles.dataText}>{hobby}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.editContainer}>
-          <Ionicons
-            style={styles.editIcon}
-            name="create-outline"
-            size={30}
-            onPress={editHobby}
-          ></Ionicons>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.settingContainer}>
-        <Text style={styles.settingLabel}>Genre</Text>
-        <TouchableOpacity style={styles.arrowContainer}>
-          <Text style={styles.dataText}>{genre}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.editContainer}>
-          <Ionicons
-            style={styles.editIcon}
-            name="create-outline"
-            size={30}
-            onPress={editGenre}
-          ></Ionicons>
-        </TouchableOpacity>
-      </View>
     </View>
   );
 };
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 60,
     backgroundColor: "white",
   },
   dataText: {
@@ -180,7 +180,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: 16,
-    marginBottom: 40,
+    marginBottom: 20,
+    backgroundColor: "black",
+    height: Platform.OS === "ios" ? 110 : 60,
   },
   headerText: {
     fontSize: 24,
@@ -188,6 +190,11 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: "center",
     marginRight: 24,
+    color: "white",
+    marginTop: Platform.OS === "ios" ? 50 : 0,
+  },
+  backContainer: {
+    marginTop: Platform.OS === "ios" ? 50 : 0,
   },
   contactContainer: {
     alignItems: "center",

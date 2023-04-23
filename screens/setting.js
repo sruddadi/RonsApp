@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   Alert,
   StatusBar,
+  Platform,
+  ImageBackground,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -116,15 +118,15 @@ const SettingsScreen = ({ navigation }) => {
     <View style={styles.container}>
       <StatusBar backgroundColor="black" barStyle="light-content" />
       <View style={styles.headerContainer}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity
+          style={styles.backContainer}
+          onPress={() => navigation.goBack()}
+        >
           <Ionicons name="caret-back-outline" size={24} color="white" />
         </TouchableOpacity>
-        <Text style={styles.headerText}>Settings</Text>
+        <Text style={styles.headerText}>Profile</Text>
         <View />
       </View>
-      {/* Contact Picture */}
-
-      {/* Settings */}
       <View style={styles.settingContainer}>
         <Text
           style={styles.settingLabel}
@@ -195,7 +197,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     marginBottom: 20,
     backgroundColor: "black",
-    height: 60,
+    height: Platform.OS === "ios" ? 110 : 60,
   },
   headerText: {
     fontSize: 24,
@@ -204,6 +206,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginRight: 24,
     color: "white",
+    marginTop: Platform.OS === "ios" ? 50 : 0,
+  },
+  backContainer: {
+    marginTop: Platform.OS === "ios" ? 50 : 0,
   },
   contactContainer: {
     alignItems: "center",

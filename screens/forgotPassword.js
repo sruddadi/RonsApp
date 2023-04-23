@@ -8,6 +8,8 @@ import {
   Keyboard,
   Alert,
   View,
+  StatusBar,
+  Dimensions,
 } from "react-native";
 
 const ForgotPasswordScreen = ({ navigation }) => {
@@ -53,6 +55,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
   return (
     <TouchableWithoutFeedback onPress={dismissKeyboard}>
       <View style={styles.container}>
+        <StatusBar backgroundColor="black" barStyle="light-content" />
         <Text style={styles.heading}>Forgot Password</Text>
         <Text style={styles.subheading}>
           Enter your email address below to reset your password.
@@ -89,7 +92,8 @@ const ForgotPasswordScreen = ({ navigation }) => {
     </TouchableWithoutFeedback>
   );
 };
-
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -141,14 +145,14 @@ const styles = StyleSheet.create({
   },
   bottomDivider: {
     position: "absolute",
-    bottom: 80,
+    bottom: 50,
     left: 0,
     right: 0,
     height: 1,
     backgroundColor: "#555555",
   },
   signupContainer: {
-    bottom: -250,
+    bottom: -235,
   },
   signupText: {
     color: "#rgb(0, 149, 246)",
@@ -157,4 +161,11 @@ const styles = StyleSheet.create({
   },
 });
 
+if (windowWidth >= 400 && windowHeight >= 850) {
+  styles.signupContainer.bottom = -290;
+}
+if (windowWidth >= 429 && windowHeight >= 931) {
+  styles.signupContainer.bottom = -275;
+  styles.bottomDivider.bottom = 90;
+}
 export default ForgotPasswordScreen;

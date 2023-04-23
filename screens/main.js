@@ -18,6 +18,7 @@ import Favorites from "./Favorite";
 // Screen names
 const homeName = "Home";
 const videoName = "Video";
+const titleName = "Title";
 const settingsName = "Settings";
 const favoriteName = "Favorites";
 
@@ -69,13 +70,13 @@ const SettingStack = () => {
 };
 
 const MainScreen = ({ route }) => {
-  const { UID } = route.params;
+  const { UID, fname, lname, email } = route.params;
 
   return (
     <Tab.Navigator
       initialRouteName={homeName}
       screenOptions={({ route }) => ({
-        tabBarStyle: { height: 70 },
+        tabBarStyle: { height: Platform.OS === "ios" ? 100 : 70 },
         tabBarActiveTintColor: "black",
         tabBarInactiveTintColor: "grey",
         tabBarLabelStyle: { paddingBottom: 10, fontSize: 12 },
@@ -109,7 +110,7 @@ const MainScreen = ({ route }) => {
         name={homeName}
         component={HomeScreen}
         options={{ headerShown: false, unmountOnBlur: true }}
-        initialParams={{ UID: UID }}
+        initialParams={{ UID: UID, fname: fname, lname: lname, email: email }}
       />
       <Tab.Screen
         name={videoName}

@@ -1,3 +1,4 @@
+import { width } from "deprecated-react-native-prop-types/DeprecatedImagePropType";
 import React, { useState } from "react";
 import {
   StyleSheet,
@@ -9,6 +10,8 @@ import {
   Keyboard,
   Image,
   Alert,
+  Dimensions,
+  StatusBar,
 } from "react-native";
 
 const LoginScreen = ({ navigation }) => {
@@ -32,8 +35,15 @@ const LoginScreen = ({ navigation }) => {
       .then((data) => {
         if (data.status === "success") {
           const id = data.user.id;
-          Alert.alert("Success", "Login successful!");
-          navigation.navigate("Main", { UID: id });
+          const fname = data.user.fname;
+          const lname = data.user.lname;
+          const email = data.user.email;
+          navigation.navigate("Main", {
+            UID: id,
+            fname: fname,
+            lname: lname,
+            email: email,
+          });
         } else {
           Alert.alert("Error", "Invalid username or password.");
         }
@@ -51,6 +61,7 @@ const LoginScreen = ({ navigation }) => {
   return (
     <TouchableWithoutFeedback onPress={dismissKeyboard}>
       <View style={styles.container}>
+        <StatusBar backgroundColor="black" barStyle="light-content" />
         <Image source={require("../assets/logos.png")} style={styles.logo} />
         <TextInput
           style={styles.input}
@@ -104,7 +115,8 @@ const LoginScreen = ({ navigation }) => {
     </TouchableWithoutFeedback>
   );
 };
-
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -121,14 +133,14 @@ const styles = StyleSheet.create({
   },
   bottomDivider: {
     position: "absolute",
-    bottom: 80,
+    bottom: 50,
     left: 0,
     right: 0,
     height: 1,
     backgroundColor: "#555555",
   },
   signupContainer: {
-    bottom: -180,
+    bottom: -160,
   },
   signupText: {
     color: "#555555",
@@ -192,10 +204,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#555555",
   },
   dividerContainer2: {
-    // flexDirection: "row",
-    // alignItems: "center",
     width: "1000%",
-    // marginBottom: 16,
   },
   divider2: {
     height: 1,
@@ -231,4 +240,11 @@ const styles = StyleSheet.create({
     color: "rgb(0, 149, 246)",
   },
 });
+
+if (windowWidth >= 429 && windowHeight >= 931) {
+  styles.forgotPasswordButton.right = -275;
+  styles.bottomDivider.bottom = 90;
+  styles.signupContainer.bottom = -205;
+}
+
 export default LoginScreen;

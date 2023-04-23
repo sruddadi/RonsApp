@@ -16,7 +16,7 @@ export default data = [
   },
   {
     question: "What is the IPA transcription for the word 'church'?",
-    options: ["/tʃɜːrtʃ/", "/tʃɜːtʃ/", "/tʃɜːrtʃ/", "/tʃʌrtʃ/"],
+    options: ["/tʃɜːrtʃ/", "/tʃɜːtʃ/", "/tiːnk/", "/tʃʌrtʃ/"],
     correct_option: "/tʃɜːtʃ/",
   },
   {

@@ -1,22 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet,ScrollView,  TextInput } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Ionicons } from '@expo/vector-icons';
-const data = require('../assets/data.json');
-const Titles = ({ route,navigation }) => {
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StatusBar,
+  StyleSheet,
+  ScrollView,
+  TextInput,
+  Platform,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Ionicons } from "@expo/vector-icons";
+const data = require("../assets/data.json");
+const Titles = ({ route, navigation }) => {
   const [titles, setTitles] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const { UID } = route.params; 
+  const { UID } = route.params;
   useEffect(() => {
     const consonantData = data.filter((item) => {
       for (const key in item) {
-        if (typeof item[key] === "string" && item[key].includes("Consonant","consonant")) {
+        if (
+          typeof item[key] === "string" &&
+          item[key].includes("Consonant", "consonant")
+        ) {
           return true;
         }
       }
       return false;
     });
-       setTitles(consonantData);
+    setTitles(consonantData);
   }, []);
   const handleTilePress = (PID) => {
     navigation.navigate("Details", { UID, PID, titles });
@@ -34,41 +46,45 @@ const Titles = ({ route,navigation }) => {
   });
 
   return (
-  
     <View style={styles.container}>
-      <View style={styles.Mainheader}>
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back" size={24} color="black" />
+      <StatusBar backgroundColor="black" barStyle="light-content" />
+      <View style={styles.headerContainer}>
+        <TouchableOpacity
+          style={styles.backContainer}
+          onPress={() => navigation.goBack()}
+        >
+          <Ionicons name="caret-back-outline" size={24} color="white" />
         </TouchableOpacity>
-       <Text style={styles.title}>
-        Consonants with "{searchQuery}" in IPA or Examples
-      </Text>
+        <Text style={styles.headerText}>
+          Consonants with "{searchQuery}" IPA
+        </Text>
+        <View />
       </View>
-      <View style={styles.header}>
-        
-        <TextInput
-          style={styles.searchInput}
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-          placeholder="Search..."
-        />
+      <View style={styles.paddingEntry}>
+        <View style={styles.header}>
+          <TextInput
+            style={styles.searchInput}
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+            placeholder="Search..."
+          />
+        </View>
+
+        <ScrollView contentContainerStyle={styles.tilesContainer}>
+          {filteredData.map((item, index) => (
+            <TouchableOpacity
+              key={index}
+              style={styles.tile}
+              onPress={() => handleTilePress(item.ID)}
+            >
+              <Text style={styles.tileTitle}>{item.IPA}</Text>
+              <Text style={styles.tileSubtitle}>{item.Examples}</Text>
+              <Text style={styles.tileSubtitle}>{item.Type}</Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
       </View>
-     
-      <ScrollView contentContainerStyle={styles.tilesContainer}>
-        {filteredData.map((item, index) => (
-          <TouchableOpacity
-            key={index}
-            style={styles.tile}
-            onPress={() => handleTilePress(item.ID)}
-          >
-            <Text style={styles.tileTitle}>{item.IPA}</Text>
-            <Text style={styles.tileSubtitle}>{item.Examples}</Text>
-            <Text style={styles.tileSubtitle}>{item.Type}</Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
     </View>
-    
   );
 };
 
@@ -76,14 +92,26 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
-    paddingHorizontal: 16,
-    paddingTop: 50,
   },
-  Mainheader:{
+  headerContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 16,
-    
+    paddingHorizontal: 16,
+    marginBottom: 20,
+    backgroundColor: "black",
+    height: Platform.OS === "ios" ? 110 : 60,
+  },
+  headerText: {
+    fontSize: 24,
+    fontWeight: "bold",
+    flex: 1,
+    textAlign: "center",
+    marginRight: 24,
+    color: "white",
+    marginTop: Platform.OS === "ios" ? 50 : 0,
+  },
+  backContainer: {
+    marginTop: Platform.OS === "ios" ? 50 : 0,
   },
   header: {
     flexDirection: "row",
@@ -106,6 +134,9 @@ const styles = StyleSheet.create({
   },
   tilesContainer: {
     paddingBottom: 16,
+  },
+  paddingEntry: {
+    paddingHorizontal: 16,
   },
   tile: {
     borderWidth: 1,

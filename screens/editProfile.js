@@ -6,25 +6,27 @@ import {
   StyleSheet,
   TextInput,
   Alert,
+  StatusBar,
+  Platform,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 const EditProfileScreen = ({ route, navigation }) => {
-  const { username, email, contact, dob, hobby, genre } = route.params;
+  const { username, email, contact, dob, fname, lname } = route.params;
 
   const [editedUsername, setEditedUsername] = useState(username);
   const [editedEmail, setEditedEmail] = useState(email);
   const [editedContact, setEditedContact] = useState(contact);
   const [editedDOB, setEditedDOB] = useState(dob);
-  const [editedHobby, setEditedHobby] = useState(hobby);
-  const [editedGenre, setEditedGenre] = useState(genre);
+  const [editedFname, setEditedHobby] = useState(fname);
+  const [editedLname, setEditedGenre] = useState(lname);
   const updateProfile = () => {
     fetch("https://sxu2906.uta.cloud/updateProfile.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
-      body: `editedUsername=${editedUsername}&editedEmail=${editedEmail}&editedContact=${editedContact}&editedDOB=${editedDOB}&editedHobby=${editedHobby}&editedGenre=${editedGenre}`,
+      body: `editedUsername=${editedUsername}&editedEmail=${editedEmail}&editedContact=${editedContact}&editedDOB=${editedDOB}&editedFname=${editedFname}&editedLname=${editedLname}`,
     })
       .then((response) => response.text())
       .then((data) => {
@@ -32,14 +34,14 @@ const EditProfileScreen = ({ route, navigation }) => {
           Alert.alert("Success", "Profile updated successfully!", [
             {
               text: "OK",
-              onPress: () => navigation.navigate("Setting"),
+              onPress: () => navigation.navigate("Profile"),
             },
           ]);
-        } else if (data === "Failed to register user") {
-          Alert.alert("Error", "User already exists. Please try again!", [
+        } else if (data === "Failed to update profile") {
+          Alert.alert("Error", "Please try again!", [
             {
               text: "OK",
-              onPress: () => navigation.navigate("Setting"),
+              onPress: () => navigation.navigate("Profile"),
             },
           ]);
         } else {
@@ -53,12 +55,13 @@ const EditProfileScreen = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
+      <StatusBar backgroundColor="black" barStyle="light-content" />
       <View style={styles.headerContainer}>
         <TouchableOpacity
-          style={{ left: -15 }}
+          style={styles.backContainer}
           onPress={() => navigation.goBack()}
         >
-          <Ionicons name="caret-back-outline" size={24} color="black" />
+          <Ionicons name="caret-back-outline" size={24} color="white" />
         </TouchableOpacity>
         <Text style={styles.headerText}>Edit Profile</Text>
         <View />
@@ -73,9 +76,9 @@ const EditProfileScreen = ({ route, navigation }) => {
             ? "Contact"
             : dob
             ? "Date of Birth"
-            : hobby
-            ? "Hobby"
-            : "Genre"}
+            : fname
+            ? "First Name"
+            : "Last Name"}
         </Text>
         <TextInput
           style={styles.textInput}
@@ -84,8 +87,8 @@ const EditProfileScreen = ({ route, navigation }) => {
             editedEmail ||
             editedContact ||
             editedDOB ||
-            editedHobby ||
-            editedGenre
+            editedFname ||
+            editedLname
           }
           onChangeText={(text) => {
             if (username) {
@@ -96,9 +99,9 @@ const EditProfileScreen = ({ route, navigation }) => {
               setEditedContact(text);
             } else if (dob) {
               setEditedDOB(text);
-            } else if (hobby) {
+            } else if (fname) {
               setEditedHobby(text);
-            } else if (genre) {
+            } else if (lname) {
               setEditedGenre(text);
             }
           }}
@@ -116,8 +119,7 @@ const EditProfileScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 16,
-    paddingTop: 60,
+    backgroundColor: "white",
   },
   editButton: {
     width: "100%",
@@ -135,7 +137,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: 16,
-    marginBottom: 40,
+    marginBottom: 20,
+    backgroundColor: "black",
+    height: Platform.OS === "ios" ? 110 : 60,
   },
   headerText: {
     fontSize: 24,
@@ -143,9 +147,15 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: "center",
     marginRight: 24,
+    color: "white",
+    marginTop: Platform.OS === "ios" ? 50 : 0,
+  },
+  backContainer: {
+    marginTop: Platform.OS === "ios" ? 50 : 0,
   },
   settingContainer: {
     marginBottom: 16,
+    paddingHorizontal: 16,
   },
   settingLabel: {
     fontSize: 16,

@@ -11,19 +11,22 @@ import {
   Alert,
   LogBox,
   Modal,
+  ScrollView,
+  Dimensions,
+  StatusBar,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Icon } from "react-native-elements";
 import { MaterialIcons } from "@expo/vector-icons";
 
 const RegisterScreen = ({ navigation }) => {
+  const [fname, setFname] = useState("");
+  const [lname, setLname] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [hobby, setHobby] = useState("");
-  const [favoriteGenre, setFavoriteGenre] = useState("");
   const [dob, setDOB] = useState("");
 
   const [date, setDate] = useState(new Date());
@@ -42,16 +45,23 @@ const RegisterScreen = ({ navigation }) => {
 
   const handleRegister = () => {
     if (
+      fname === "" ||
+      lname === "" ||
       username === "" ||
       email === "" ||
       phoneNumber === "" ||
-      // dateOfBirth === "" ||
       password === "" ||
-      confirmPassword === "" ||
-      hobby === "" ||
-      favoriteGenre === ""
+      confirmPassword === ""
     ) {
       Alert.alert("Error", "Please fill all fields");
+      return;
+    }
+    if (!/^[a-zA-Z]{3,10}$/.test(fname)) {
+      Alert.alert("Error", "Please enter a valid first name");
+      return;
+    }
+    if (!/^[a-zA-Z]{3,10}$/.test(lname)) {
+      Alert.alert("Error", "Please enter a valid last name");
       return;
     }
     if (!/^[a-zA-Z0-9_-]{3,20}$/.test(username)) {
@@ -66,14 +76,6 @@ const RegisterScreen = ({ navigation }) => {
       Alert.alert("Error", "Please enter a valid phone number");
       return;
     }
-    // if (
-    //   !/^(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-(19|20)\d{2}$/.test(
-    //     dateOfBirth
-    //   )
-    // ) {
-    //   Alert.alert("Error", "Please enter a valid date of birth");
-    //   return;
-    // }
     if (
       !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=.*[^\s]).{8,}$/.test(
         password
@@ -86,42 +88,24 @@ const RegisterScreen = ({ navigation }) => {
       Alert.alert("Error", "Passwords do not match. Please try again!");
       return;
     }
-    if (!/^[a-zA-Z]{3,10}$/.test(hobby)) {
-      Alert.alert("Error", "Please enter a valid hobby");
-      return;
-    }
-    if (!/^[a-zA-Z]{3,10}$/.test(favoriteGenre)) {
-      Alert.alert("Error", "Please enter a valid genre");
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append("username", username);
-    formData.append("email", email);
-    formData.append("phoneNumber", phoneNumber);
-    formData.append("dob", dob);
-    formData.append("password", password);
-    formData.append("hobby", hobby);
-    formData.append("favoriteGenre", favoriteGenre);
 
     fetch("https://sxu2906.uta.cloud/register.php", {
       method: "POST",
       headers: {
-        Accept: "application/json",
-        "Content-Type": "multipart/form-data",
+        "Content-Type": "application/x-www-form-urlencoded",
       },
-      body: formData,
+      body: `fname=${fname}&lname=${lname}&username=${username}&email=${email}&phoneNumber=${phoneNumber}&dob=${dob}&password=${password}`,
     })
-      .then((response) => response.json())
+      .then((response) => response.text())
       .then((data) => {
-        if (data.message === "User registered successfully") {
+        if (data === "User registered successfully") {
           Alert.alert("Success", "User registered successfully!", [
             {
               text: "OK",
               onPress: () => navigation.navigate("Login"),
             },
           ]);
-        } else if (data.message === "User already exists") {
+        } else if (data === "User already exists") {
           Alert.alert("Error", "User already exists. Please try again!", [
             {
               text: "OK",
@@ -148,7 +132,22 @@ const RegisterScreen = ({ navigation }) => {
   return (
     <TouchableWithoutFeedback onPress={dismissKeyboard}>
       <View style={styles.container}>
+        <StatusBar backgroundColor="black" barStyle="light-content" />
         <Text style={styles.title}>Create an Account</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="First Name"
+          placeholderTextColor="gray"
+          value={fname}
+          onChangeText={setFname}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Last Name"
+          placeholderTextColor="gray"
+          value={lname}
+          onChangeText={setLname}
+        />
         <TextInput
           style={styles.input}
           placeholder="Username"
@@ -241,20 +240,7 @@ const RegisterScreen = ({ navigation }) => {
           value={confirmPassword}
           onChangeText={setConfirmPassword}
         />
-        <TextInput
-          style={styles.input}
-          placeholder="Hobby"
-          placeholderTextColor="gray"
-          value={hobby}
-          onChangeText={setHobby}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Favorite Genre"
-          placeholderTextColor="gray"
-          value={favoriteGenre}
-          onChangeText={setFavoriteGenre}
-        />
+
         <TouchableOpacity
           style={styles.registerButton}
           onPress={handleRegister}
@@ -271,7 +257,8 @@ const RegisterScreen = ({ navigation }) => {
     </TouchableWithoutFeedback>
   );
 };
-
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -325,14 +312,14 @@ const styles = StyleSheet.create({
   },
   bottomDivider: {
     position: "absolute",
-    bottom: 80,
+    bottom: 50,
     left: 0,
     right: 0,
     height: 1,
     backgroundColor: "#555555",
   },
   signupContainer: {
-    bottom: -85,
+    bottom: -70,
   },
   signupText: {
     color: "#rgb(0, 149, 246)",
@@ -344,5 +331,10 @@ const styles = StyleSheet.create({
     bottom: -10,
   },
 });
+
+if (windowWidth >= 429 && windowHeight >= 931) {
+  styles.signupContainer.bottom = -112;
+  styles.bottomDivider.bottom = 90;
+}
 
 export default RegisterScreen;

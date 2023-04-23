@@ -6,6 +6,7 @@ import {
   Text,
   ScrollView,
   Image,
+  StatusBar,
 } from "react-native";
 import YoutubePlayer from "react-native-youtube-iframe";
 import { Ionicons } from "@expo/vector-icons";
@@ -83,9 +84,13 @@ const YouVidScreen = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
+      <StatusBar backgroundColor="black" barStyle="light-content" />
       <View style={styles.headerContainer}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="caret-back-outline" size={24} color="black" />
+        <TouchableOpacity
+          style={styles.backContainer}
+          onPress={() => navigation.goBack()}
+        >
+          <Ionicons name="caret-back-outline" size={24} color="white" />
         </TouchableOpacity>
         <Text style={styles.headerText}>{sectionTitle}</Text>
         <View />
@@ -144,11 +149,12 @@ const styles = StyleSheet.create({
     marginBottom: 450,
   },
   headerContainer: {
-    paddingTop: 60,
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: 16,
-    marginBottom: 40,
+
+    backgroundColor: "black",
+    height: Platform.OS === "ios" ? 110 : 60,
   },
   videoContainer: {
     top: -60,
@@ -162,10 +168,16 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: "center",
     marginRight: 24,
+    color: "white",
+    marginTop: Platform.OS === "ios" ? 50 : 0,
+  },
+  backContainer: {
+    marginTop: Platform.OS === "ios" ? 50 : 0,
   },
   videoHeading: {
     fontSize: 20,
     fontWeight: "bold",
+    marginTop: Platform.OS === "ios" ? 12 : 0,
     marginBottom: 10,
     right: -18,
   },
@@ -192,7 +204,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#ccc",
   },
   videoContainer: {
-    marginBottom: 20,
+    marginBottom: -80,
+    height: 400,
     marginTop: -66,
   },
   videoTitleContainer: {

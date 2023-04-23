@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import {
   StyleSheet,
-  SafeAreaView,
+  StatusBar,
   Text,
   View,
   TouchableOpacity,
   Image,
   Alert,
   ScrollView,
+  Platform,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -18,45 +20,49 @@ const QuizScreen = ({ navigation }) => {
   const [q2, setQ2] = useState("");
   const [q3, setQ3] = useState("");
   const [q4, setQ4] = useState("");
-  useEffect(() => {
-    const getScores = async () => {
-      try {
-        const response = await fetch(
-          "https://sxu2906.uta.cloud/getScores.php",
-          {
-            method: "POST",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-          }
-        );
 
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
+  const getScores = async () => {
+    try {
+      const response = await fetch("https://sxu2906.uta.cloud/getScores.php", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
 
-        const value = await response.json();
-
-        if (value.status === "success") {
-          setQ1(value.user.Quiz1);
-          setQ2(value.user.Quiz2);
-          setQ3(value.user.Quiz3);
-          setQ4(value.user.Quiz4);
-        } else {
-          Alert.alert("Something went wrong");
-        }
-      } catch (error) {
-        console.error("Fetch error:", error);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
       }
-    };
-    getScores();
-  }, []);
+
+      const value = await response.json();
+
+      if (value.status === "success") {
+        setQ1(value.user.Quiz1);
+        setQ2(value.user.Quiz2);
+        setQ3(value.user.Quiz3);
+        setQ4(value.user.Quiz4);
+      } else {
+        Alert.alert("Something went wrong");
+      }
+    } catch (error) {
+      console.error("Fetch error:", error);
+    }
+  };
+  useFocusEffect(
+    React.useCallback(() => {
+      getScores();
+    }, [])
+  );
   return (
     <View style={styles.container}>
+      <StatusBar backgroundColor="black" barStyle="light-content" />
       <View style={styles.headerContainer}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="caret-back-outline" size={24} color="black" />
+        <TouchableOpacity
+          style={styles.backContainer}
+          onPress={() => navigation.goBack()}
+        >
+          <Ionicons name="caret-back-outline" size={24} color="white" />
         </TouchableOpacity>
         <Text style={styles.headerText}>Quizzes</Text>
         <View />
@@ -98,14 +104,15 @@ const QuizScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 30,
     backgroundColor: "white",
   },
   headerContainer: {
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: 16,
-    marginBottom: 40,
+    marginBottom: 20,
+    backgroundColor: "black",
+    height: Platform.OS === "ios" ? 110 : 60,
   },
   headerText: {
     fontSize: 24,
@@ -113,6 +120,11 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: "center",
     marginRight: 24,
+    color: "white",
+    marginTop: Platform.OS === "ios" ? 50 : 0,
+  },
+  backContainer: {
+    marginTop: Platform.OS === "ios" ? 50 : 0,
   },
   buttonContainer: {
     flexDirection: "column",
@@ -123,7 +135,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   button: {
-    backgroundColor: "grey",
+    backgroundColor: "#A6A5A6",
     borderColor: "white",
     borderWidth: 5,
     borderRadius: 10,
@@ -173,20 +185,6 @@ const styles = StyleSheet.create({
     marginLeft: 90,
     fontSize: 30,
     fontStyle: "italic",
-  },
-  headerContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingTop: 30,
-    paddingHorizontal: 16,
-    marginBottom: 16,
-  },
-  headerText: {
-    fontSize: 24,
-    fontWeight: "bold",
-    flex: 1,
-    textAlign: "center",
-    marginRight: 24,
   },
 });
 

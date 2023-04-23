@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   SafeAreaView,
@@ -6,134 +6,153 @@ import {
   View,
   TouchableOpacity,
   Alert,
+  StatusBar,
+  Image,
 } from "react-native";
-
-import { Icon } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 
 const MenuScreen = ({ route, navigation }) => {
-  const { UID } = route.params; // ID to be used - for prateek
+  const { UID, fname, lname, email } = route.params; // ID to be used - for prateek
+
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <Text style={styles.buttonText1}> Welcome {UID} </Text>
-        <View style={styles.WelContainer}></View>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.navigate("Phone", { UID })}
-          >
-            <Text style={styles.buttonText}>Consonants</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.navigate("Vow", { UID })}
-          >
-            <Text style={styles.buttonText}>Vowels</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
+    <ScrollView style={styles.container}>
+      <StatusBar backgroundColor="black" barStyle="light-content" />
+
+      <View style={styles.imageContainer}>
+        <Image
+          source={require("../assets/dashboard.jpg")} // add your image source here
+          style={styles.image}
+        />
+      </View>
+      <View style={styles.textContainer}>
+        <Text style={styles.name}>
+          {fname} {lname}
+        </Text>
+        <Text style={styles.email}>{email}</Text>
+        <Text style={styles.ipaTitle}>IPA Sounds</Text>
+      </View>
+
+      <View style={styles.ipaContainer}>
+        <View style={styles.boxContainer}>
+          <View style={styles.box}>
+            <Text
+              style={styles.boxTitle}
+              onPress={() => navigation.navigate("Phone", { UID })}
+            >
+              Consonants
+            </Text>
+          </View>
+          <View style={styles.box}>
+            <Text
+              style={styles.boxTitle}
+              onPress={() => navigation.navigate("Vow", { UID })}
+            >
+              Vowels
+            </Text>
+          </View>
+          <View style={styles.box}>
+            <Text
+              style={styles.boxTitle}
+              onPress={() => navigation.navigate("RS", { UID })}
+            >
+              R sounds
+            </Text>
+          </View>
+        </View>
+      </View>
+
+      <View style={styles.quizContainer}>
+        <TouchableOpacity style={styles.quizBox}>
+          <Text
+            style={styles.quizTitle}
             onPress={() => navigation.navigate("Quiz")}
           >
-            <Text style={styles.buttonText}>Quiz</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.navigate("RS", { UID })}
-          >
-            <Text style={styles.buttonText}>R-sound Combinations</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.buttonContainer1}>
-          <TouchableOpacity onPress={() => navigation.navigate("Video")}>
-            <Icon name="play" type="font-awesome" style={styles.button1}></Icon>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("Register")}>
-            <Icon name="film" type="font-awesome" style={styles.button1}></Icon>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("FAV", { UID })}>
-            <Icon name="favorite" type="material" style={styles.button1}></Icon>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("Setting")}>
-            <Icon name="settings" type="material" style={styles.button1}></Icon>
-          </TouchableOpacity>
-          <Text></Text>
-          <Text></Text>
-        </View>
+            Quiz
+          </Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  WelContainer: {
-    width: 0,
-    height: 10,
-    backgroundColor: "transparent",
-    borderStyle: "solid",
-    borderLeftWidth: 205,
-    borderRightWidth: 205,
-    borderBottomWidth: 140,
-    borderLeftColor: "transparent",
-    borderRightColor: "transparent",
-    borderBottomColor: "black",
-    transform: [{ rotate: "180deg" }],
-  },
   container: {
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "white",
+    backgroundColor: "#dcdcdc",
   },
-  buttonContainer: {
-    flexDirection: "column",
-    marginTop: 10,
-  },
-  buttonContainer1: {
+  imageContainer: {
+    flex: 1,
     flexDirection: "row",
-    marginTop: 30,
+    justifyContent: "center",
+    alignItems: "center",
+
+    marginBottom: 20,
   },
-  button: {
-    backgroundColor: "black",
-    borderColor: "white",
-    borderWidth: 5,
-    borderRadius: 10,
-    paddingVertical: 35,
-    paddingHorizontal: 20,
-    width: 290,
-    margin: 10,
-    textAlign: "center",
-    textDecoration: "none",
-    transition: "background-color 0.3s, color 0.3s",
+  image: {
+    width: 500,
+    height: Platform.OS === "ios" ? 200 : 150,
   },
-  button1: {
-    borderWidth: 5,
-    borderRadius: 10,
-    paddingVertical: 15,
-    paddingHorizontal: 10,
-    width: 70,
-    margin: 10,
-    textAlign: "center",
-    textDecoration: "none",
-    transition: "background-color 0.3s, color 0.3s",
+  textContainer: {
+    flex: 1,
+    marginLeft: 20,
   },
-  buttonText: {
+  name: {
+    fontWeight: "bold",
+    fontSize: 35,
     color: "white",
+    top: -130,
+  },
+  email: {
+    color: "#808080",
     fontSize: 20,
-    fontWeight: "bold",
-    textAlign: "center",
-    textTransform: "uppercase",
+    top: -130,
   },
-  buttonText1: {
-    color: "white",
+  ipaContainer: {
     backgroundColor: "black",
-    fontSize: 40,
-    paddingTop: 40,
-    paddingLeft: 100,
-    paddingRight: 100,
+    borderRadius: 20,
+    padding: 20,
+    width: 340,
+    alignSelf: "center",
+    marginTop: Platform.OS === "ios" ? -5 : -10,
+  },
+  ipaTitle: {
+    position: "absolute",
+    top: 10,
+    left: Platform.OS === "ios" ? 30 : 20,
     fontWeight: "bold",
-    textAlign: "center",
-    textTransform: "uppercase",
+    fontSize: 30,
+    color: "black",
+  },
+  boxContainer: {
+    flexDirection: "column",
+    justifyContent: "space-between",
+  },
+  box: {
+    backgroundColor: "#dadada",
+    borderRadius: 10,
+    padding: 20,
+    top: 17,
+    marginBottom: 40,
+    alignSelf: "center",
+    width: "80%",
+    alignItems: "center",
+  },
+  boxTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  quizContainer: {
+    backgroundColor: "black",
+    borderRadius: 20,
+    padding: 20,
+    width: 340,
+    alignSelf: "center",
+    alignItems: "center",
+    marginTop: 20,
+  },
+  quizTitle: {
+    fontWeight: "bold",
+    fontSize: 25,
+    color: "white",
   },
 });
 

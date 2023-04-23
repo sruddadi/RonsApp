@@ -6,6 +6,8 @@ import {
   StyleSheet,
   TextInput,
   Alert,
+  StatusBar,
+  Platform,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -64,12 +66,13 @@ const ChangePasswordScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <StatusBar backgroundColor="black" barStyle="light-content" />
       <View style={styles.headerContainer}>
         <TouchableOpacity
-          style={{ left: -5 }}
+          // style={{ left }}
           onPress={() => navigation.goBack()}
         >
-          <Ionicons name="caret-back-outline" size={24} color="black" />
+          <Ionicons name="caret-back-outline" size={24} color="white" />
         </TouchableOpacity>
         <Text style={styles.headerText}>Change Password</Text>
         <View />
@@ -111,24 +114,27 @@ const ChangePasswordScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    paddingHorizontal: 20,
-    paddingTop: 40,
+    backgroundColor: "white",
   },
   headerContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 40,
-    marginVertical: 20,
+    paddingHorizontal: 16,
+    marginBottom: 20,
+    backgroundColor: "black",
+    height: Platform.OS === "ios" ? 150 : 60,
   },
   headerText: {
     fontSize: 24,
     fontWeight: "bold",
-    marginLeft: -15,
+    flex: 1,
+    textAlign: "center",
+    marginRight: 24,
+    color: "white",
   },
   settingContainer: {
     flex: 1,
+    paddingHorizontal: 20,
   },
   settingLabel: {
     fontSize: 16,

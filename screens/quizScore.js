@@ -10,6 +10,7 @@ import {
   Animated,
   StyleSheet,
   Alert,
+  Platform,
 } from "react-native";
 import { COLORS, SIZES } from "../constants";
 import { Ionicons } from "@expo/vector-icons";
@@ -245,6 +246,7 @@ const QuizScoreScreen = ({ navigation, route }) => {
         style={{
           width: "100%",
           height: 20,
+          top: 20,
           borderRadius: 20,
           backgroundColor: "#00000020",
         }}
@@ -271,9 +273,13 @@ const QuizScoreScreen = ({ navigation, route }) => {
         flex: 1,
       }}
     >
+      <StatusBar backgroundColor="black" barStyle="light-content" />
       <View style={styles.headerContainer}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="caret-back-outline" size={24} color="black" />
+        <TouchableOpacity
+          style={styles.backContainer}
+          onPress={() => navigation.goBack()}
+        >
+          <Ionicons name="caret-back-outline" size={24} color="white" />
         </TouchableOpacity>
         <Text style={styles.headerText}>{level}</Text>
         <View />
@@ -282,6 +288,7 @@ const QuizScoreScreen = ({ navigation, route }) => {
         <View
           style={{
             flex: 1,
+
             paddingVertical: 40,
             paddingHorizontal: 16,
             position: "relative",
@@ -663,8 +670,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: 16,
-
-    paddingTop: 80,
+    marginTop: Platform.OS === "ios" ? -60 : 0,
+    backgroundColor: "black",
+    height: Platform.OS === "ios" ? 110 : 60,
   },
   headerText: {
     fontSize: 24,
@@ -672,6 +680,11 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: "center",
     marginRight: 24,
+    color: "white",
+    marginTop: Platform.OS === "ios" ? 50 : 0,
+  },
+  backContainer: {
+    marginTop: Platform.OS === "ios" ? 50 : 0,
   },
 });
 export default QuizScoreScreen;
