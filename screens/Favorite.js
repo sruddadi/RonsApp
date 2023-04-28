@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
   },
   favoriteTile: {
     flexDirection: "row",
-    width: "30%",
+    width: "32%",
     margin: "1%",
     backgroundColor: "#eee",
     padding: 16,

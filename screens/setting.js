@@ -124,7 +124,7 @@ const SettingsScreen = ({ navigation }) => {
         >
           <Ionicons name="caret-back-outline" size={24} color="white" />
         </TouchableOpacity>
-        <Text style={styles.headerText}>Profile</Text>
+        <Text style={styles.headerText}>Settings</Text>
         <View />
       </View>
       <View style={styles.settingContainer}>

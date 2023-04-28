@@ -10,10 +10,50 @@ import {
   Image,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { useFocusEffect } from "@react-navigation/native";
 
 const MenuScreen = ({ route, navigation }) => {
-  const { UID, fname, lname, email } = route.params; // ID to be used - for prateek
+  const { UID } = route.params; // ID to be used - for prateek
+  const [email, setEmail] = useState("");
+  const [fname, setFname] = useState("");
+  const [lname, setLname] = useState("");
+  const fetchUsername = async () => {
+    try {
+      const response = await fetch(
+        "https://sxu2906.uta.cloud/getUsername.php",
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+
+      if (data.status === "success") {
+        const { fname, lname, email } = data.user;
+        setEmail(email);
+        setFname(fname);
+        setLname(lname);
+      } else {
+        Alert.alert("Failed");
+      }
+    } catch (error) {
+      console.error("Fetch error:", error);
+    }
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchUsername();
+    }, [])
+  );
   return (
     <ScrollView style={styles.container}>
       <StatusBar backgroundColor="black" barStyle="light-content" />
