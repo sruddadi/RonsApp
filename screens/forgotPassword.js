@@ -161,11 +161,17 @@ const styles = StyleSheet.create({
   },
 });
 
-if (windowWidth >= 400 && windowHeight >= 850) {
-  styles.signupContainer.bottom = -290;
-}
 if (windowWidth >= 429 && windowHeight >= 931) {
   styles.signupContainer.bottom = -275;
   styles.bottomDivider.bottom = 90;
+} else if (windowWidth >= 411 && windowHeight >= 827) {
+  styles.bottomDivider.bottom = 50;
+  styles.signupContainer.bottom = -255;
+} else if (windowWidth >= 389 && windowHeight >= 843) {
+  styles.bottomDivider.bottom = 70;
+  styles.signupContainer.bottom = -248;
+} else if (windowWidth >= 411 && windowHeight >= 707) {
+  styles.bottomDivider.bottom = 40;
+  styles.signupContainer.bottom = -190;
 }
 export default ForgotPasswordScreen;

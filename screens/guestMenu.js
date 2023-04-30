@@ -11,50 +11,10 @@ import {
   Image,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { useFocusEffect } from "@react-navigation/native";
 
 const MenuScreen = ({ route, navigation }) => {
-  const { UID } = route.params; // ID to be used - for prateek
-  const [email, setEmail] = useState("");
-  const [fname, setFname] = useState("");
-  const [lname, setLname] = useState("");
-  const fetchUsername = async () => {
-    try {
-      const response = await fetch(
-        "https://sxu2906.uta.cloud/getUsername.php",
-        {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        }
-      );
+  const { UID } = route.params;
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      const data = await response.json();
-
-      if (data.status === "success") {
-        const { fname, lname, email } = data.user;
-        setEmail(email);
-        setFname(fname);
-        setLname(lname);
-      } else {
-        Alert.alert("Failed");
-      }
-    } catch (error) {
-      console.error("Fetch error:", error);
-    }
-  };
-
-  useFocusEffect(
-    React.useCallback(() => {
-      fetchUsername();
-    }, [])
-  );
   return (
     <ScrollView style={styles.container}>
       <StatusBar backgroundColor="black" barStyle="light-content" />
@@ -66,10 +26,8 @@ const MenuScreen = ({ route, navigation }) => {
         />
       </View>
       <View style={styles.textContainer}>
-        <Text style={styles.name}>
-          {fname} {lname}
-        </Text>
-        <Text style={styles.email}>{email}</Text>
+        <Text style={styles.name}>Welcome!!</Text>
+        <Text style={styles.email}>Guest Login</Text>
         <Text style={styles.ipaTitle}>IPA Sounds</Text>
       </View>
 
@@ -106,7 +64,12 @@ const MenuScreen = ({ route, navigation }) => {
         <TouchableOpacity style={styles.quizBox}>
           <Text
             style={styles.quizTitle}
-            onPress={() => navigation.navigate("Quiz")}
+            onPress={() =>
+              Alert.alert(
+                "Welcome!",
+                "Please create an account to use this feature"
+              )
+            }
           >
             Quiz
           </Text>

@@ -8,6 +8,7 @@ import {
   Button,
   TouchableWithoutFeedback,
   Keyboard,
+  KeyboardAvoidingView,
   Alert,
   LogBox,
   Modal,
@@ -335,6 +336,15 @@ const styles = StyleSheet.create({
 if (windowWidth >= 429 && windowHeight >= 931) {
   styles.signupContainer.bottom = -112;
   styles.bottomDivider.bottom = 90;
+} else if (windowWidth >= 411 && windowHeight >= 827) {
+  styles.bottomDivider.bottom = 50;
+  styles.signupContainer.bottom = -95;
+} else if (windowWidth >= 389 && windowHeight >= 843) {
+  styles.bottomDivider.bottom = 70;
+  styles.signupContainer.bottom = -85;
+} else if (windowWidth >= 411 && windowHeight >= 707) {
+  styles.bottomDivider.bottom = 40;
+  styles.signupContainer.bottom = -30;
 }
 
 export default RegisterScreen;

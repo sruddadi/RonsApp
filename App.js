@@ -19,6 +19,10 @@ import MainScreen from "./screens/main";
 import YoutubeScreen from "./screens/youtube";
 import YouVidScreen from "./screens/youVid";
 import QuizScoreScreen from "./screens/quizScore";
+import GuestMenuScreen from "./screens/guestMenu";
+import GuestMainScreen from "./screens/guestMain";
+import DummyScreen from "./screens/dummy";
+import GuestSettingScreen from "./screens/guestSetting";
 
 const Stack = createStackNavigator();
 
@@ -46,9 +50,13 @@ export default function App() {
         <Stack.Screen name="EditProfile" component={EditProfileScreen} />
         <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
         <Stack.Screen name="Main" component={MainScreen} />
+        <Stack.Screen name="GuestMain" component={GuestMainScreen} />
         <Stack.Screen name="QuizScore" component={QuizScoreScreen} />
         <Stack.Screen name="Youtube" component={YoutubeScreen} />
         <Stack.Screen name="YouVid" component={YouVidScreen} />
+        <Stack.Screen name="GuestMenu" component={GuestMenuScreen} />
+        <Stack.Screen name="Dummy" component={DummyScreen} />
+        <Stack.Screen name="GuestSetting" component={GuestSettingScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

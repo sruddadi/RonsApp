@@ -1,4 +1,3 @@
-import { width } from "deprecated-react-native-prop-types/DeprecatedImagePropType";
 import React, { useState } from "react";
 import {
   StyleSheet,
@@ -19,38 +18,42 @@ const LoginScreen = ({ navigation }) => {
   const [password, setPassword] = useState("");
 
   const handleLogin = () => {
-    const formData = new FormData();
-    formData.append("email", email);
-    formData.append("password", password);
+    if (email != "" && password != "") {
+      const formData = new FormData();
+      formData.append("email", email);
+      formData.append("password", password);
 
-    fetch("https://sxu2906.uta.cloud/login.php", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "multipart/form-data",
-      },
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.status === "success") {
-          const id = data.user.id;
-          const fname = data.user.fname;
-          const lname = data.user.lname;
-          const email = data.user.email;
-          navigation.navigate("Main", {
-            UID: id,
-            fname: fname,
-            lname: lname,
-            email: email,
-          });
-        } else {
-          Alert.alert("Error", "Invalid username or password.");
-        }
+      fetch("https://sxu2906.uta.cloud/login.php", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "multipart/form-data",
+        },
+        body: formData,
       })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === "success") {
+            const id = data.user.id;
+            const fname = data.user.fname;
+            const lname = data.user.lname;
+            const email = data.user.email;
+            navigation.navigate("Main", {
+              UID: id,
+              fname: fname,
+              lname: lname,
+              email: email,
+            });
+          } else {
+            Alert.alert("Error", "Invalid username or password.");
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    } else {
+      Alert.alert("Error", "Please enter a email and password to continue.");
+    }
   };
   const handleLogout = () => {
     setIsLoggedIn(false);
@@ -95,7 +98,7 @@ const LoginScreen = ({ navigation }) => {
         </View>
         <TouchableOpacity
           style={styles.guestButton}
-          onPress={() => navigation.navigate("Register")}
+          onPress={() => navigation.navigate("GuestMain")}
         >
           <Text style={styles.guestButtonText}>Continue as a Guest</Text>
         </TouchableOpacity>
@@ -245,6 +248,18 @@ if (windowWidth >= 429 && windowHeight >= 931) {
   styles.forgotPasswordButton.right = -275;
   styles.bottomDivider.bottom = 90;
   styles.signupContainer.bottom = -205;
+} else if (windowWidth >= 411 && windowHeight >= 827) {
+  styles.forgotPasswordButton.right = -255;
+  styles.bottomDivider.bottom = 50;
+  styles.signupContainer.bottom = -185;
+} else if (windowWidth >= 389 && windowHeight >= 843) {
+  styles.forgotPasswordButton.right = -235;
+  styles.bottomDivider.bottom = 70;
+  styles.signupContainer.bottom = -175;
+} else if (windowWidth >= 411 && windowHeight >= 707) {
+  styles.forgotPasswordButton.right = -260;
+  styles.bottomDivider.bottom = 40;
+  styles.signupContainer.bottom = -120;
 }
 
 export default LoginScreen;
